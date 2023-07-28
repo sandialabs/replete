@@ -1,0 +1,97 @@
+<replete.xstream.SerializationResult>
+  <metadata>
+    <appName>&lt;unknown&gt;</appName>
+    <serializationDate>2017-09-04 05:21:42 AM</serializationDate>
+    <user>dtrumbo</user>
+    <serializationLib>XStream</serializationLib>
+    <serializationLibVersion>xstream-1.4.3/xpp3_min-1.1.4c</serializationLibVersion>
+    <targetObjectClass>replete.ui.help.model.HelpAlbum</targetObjectClass>
+  </metadata>
+  <targetObject class="replete.ui.help.model.HelpAlbum">
+    <id>test2</id>
+    <pageRoots>
+      <replete.ui.help.model.HelpPage>
+        <album reference="../../.."/>
+        <name>aa</name>
+        <content>
+          <htmlContent>2 2 2  2 2 </htmlContent>
+        </content>
+        <children/>
+      </replete.ui.help.model.HelpPage>
+      <replete.ui.help.model.HelpPage>
+        <album reference="../../.."/>
+        <name>EERE</name>
+        <content>
+          <htmlContent>ljk lkjk lkj lkj lkj alsdkflkadfs jlks </htmlContent>
+        </content>
+        <children>
+          <replete.ui.help.model.HelpPage>
+            <album reference="../../../../.."/>
+            <parent reference="../../.."/>
+            <name>a</name>
+            <content>
+              <htmlContent>aaaaaaaaaaaaaaaaaaaa</htmlContent>
+            </content>
+            <children/>
+          </replete.ui.help.model.HelpPage>
+          <replete.ui.help.model.HelpPage>
+            <album reference="../../../../.."/>
+            <parent reference="../../.."/>
+            <name>XX</name>
+            <content>
+              <htmlContent></htmlContent>
+            </content>
+            <children>
+              <replete.ui.help.model.HelpPage>
+                <album reference="../../../../../../.."/>
+                <parent reference="../../.."/>
+                <name>New Section</name>
+                <content>
+                  <htmlContent></htmlContent>
+                </content>
+                <children/>
+              </replete.ui.help.model.HelpPage>
+            </children>
+          </replete.ui.help.model.HelpPage>
+          <replete.ui.help.model.HelpPage>
+            <album reference="../../../../.."/>
+            <parent reference="../../.."/>
+            <name>b</name>
+            <content>
+              <htmlContent>bbbbbbbbbbbbbbbbbb</htmlContent>
+            </content>
+            <children/>
+          </replete.ui.help.model.HelpPage>
+          <replete.ui.help.model.HelpPage>
+            <album reference="../../../../.."/>
+            <parent reference="../../.."/>
+            <name>d</name>
+            <content>
+              <htmlContent>dddddddd kkkkkk</htmlContent>
+            </content>
+            <children/>
+          </replete.ui.help.model.HelpPage>
+          <replete.ui.help.model.HelpPage>
+            <album reference="../../../../.."/>
+            <parent reference="../../.."/>
+            <name>c</name>
+            <content>
+              <htmlContent>ccccccccc</htmlContent>
+            </content>
+            <children/>
+          </replete.ui.help.model.HelpPage>
+        </children>
+      </replete.ui.help.model.HelpPage>
+      <replete.ui.help.model.HelpPage>
+        <album reference="../../.."/>
+        <name>New Section</name>
+        <content>
+          <htmlContent></htmlContent>
+        </content>
+        <children/>
+      </replete.ui.help.model.HelpPage>
+    </pageRoots>
+    <terms/>
+    <termLinks/>
+  </targetObject>
+</replete.xstream.SerializationResult>

@@ -1,0 +1,6 @@
+Although this is a JAR file, it doesn't belong in the
+"lib" directory because it doesn't suppor the project
+the same way that other "lib" directory JAR files
+do.  The "javacc.jar" files actually constitutes
+an external tool managed and invoked completely
+separate from Eclipse.

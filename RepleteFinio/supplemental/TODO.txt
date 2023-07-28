@@ -1,0 +1,175 @@
+1.  SORTING!!!!! Implement sorting of AMaps/ALists.
+   * This is generally important, as insertion and access are not the only ordering we'd like
+   * Also, it'd be nice to maintain multiple orderings at once
+   * right now, changeKey changes of the ordering of that key.  The UI hears that change and replaces
+     the tree node's user object, but not its order within its parent map.  Thus it gets out of sync.
+   * Might be nice in the UI to be able to to switch between registered orderings. 
+
+2. Update Node Info when you edit a node in the tree
+
+3. Have "key conversions" so that Integer 3 and String "3" can both be used to access the same place in to the map.
+   * This is currently hindering some cs'ing in the console
+
+4. Finish the BashCommandLineParser testing and any other features
+
+5. Finish the tab completion in the console panel.
+
+6. Allow environment variables to store not just strings, but keypaths, or values in the map
+
+7. Allow all the data model operations to be on a separate thread, running in background, and have their progress
+   showing in the status bar.
+
+8. Be able to expand a semi-terminal like a file or a URL.
+
+9. Complete/verify/test AMap/AList/AListMap functionality
+
+10. Make 'cp' command
+
+11. Give put*, mv, cp, listen, unlisten, count commands a '-r' option
+
+12. FUTURE: Make a lot of transformation commands like flatten, or turning rob's 
+    excel spreadsheet into appropriate maps, etc! , finding subtables in an excel spreadsheet
+    
+13. Implement a dive down / dive up feature for the main display.  Eclipse calls it "Go Into"
+
+14. Implement an "anchors" function so you can switch between main tree and "interested" subpaths
+
+15. Implement toggle @@a-meta maps  //? is this good
+16. Make count & ls ignore @@a-meta if necessary
+
+17. Could have a "Push to Primary Map" as an opposite operation to the create alternates map operation
+// not that useful, as you can just use d&d move commands, but would be nice to have for completeness
+// only valid on the children of an @@a-alt map
+
+// Other unix command ideas:
+// cat, more, head, tail, diff, wc, grep, find, zip/unzip/tar/untar, 
+// sort, pushd/popd (maintain cs history), file, ln, uniq, stat, history, man
+// research and checking.  
+
+//TODO: Research how to convert a
+// sequence of paths into a sequence of paths that are
+// mutually exclusive. and only delete those paths. [some of this has been done]
+
+Also... need a way to make sure that no paths are parents of each other for combining/
+anchoring type operations... worked on this some, KeyPath now has isAnc/isDesc and
+wait to find roots of a list of keypaths, now in the middle of testing to see whether or not
+the KeyPath.getRoots method is fast enough to be worth it anyway, at least for the
+remove operation.  That investigation led to trying to figure out why expanding
+200,000 tree paths was so slow, and discovered that SO many TreePath objects are being
+constructed.  Can potentially try to create new JTree/DefaultTreeModel/TreePath classes
+to attempt to find a speed up.  Very experimental idea, but could be worth it in the long
+run for future large data usability.  Right now, remove hasn't been implemented to use the
+new root merging feature, because it runs so fast right now as it is.
+However, besides continuing the above work, we can now use this new code in a new
+DataModelController.move(KeyPath[],KeyPath,int) method
+
+        // TODO: AlphaMap concept:
+        // Why is this so much code?
+        // Let's analyze this:
+        //   boolean one = or(treTree.getSO(), "isAnchor()")
+        //   boolean all = and(treTree.getSO(), "isAnchor()")
+        // Interesting...
+
+        if(treTree.isSelection()) {
+            boolean all = true;
+            for(NodeATree nSel : treTree.getASelectionObjects()) {
+                all = all && nSel.isAnchor();
+            }
+
+            
+BASIC SYNTAX IN STRING:
+
+Rendering of a map = ${MO}$(${PO}${KO}${K}${KC}${AO}${A}${AC}${VO}${V}${VC}${PC}$)${MC}
+$( and $) indicate a repetition block that repeats over each key-value pair
+so to just print out the values into a string...
+
+render = "$(${V}${PC}$)
+where $PC => pc1 = " ", pc2 = ""
+
+Research into having more control over the drop line and visuals:
+
+JTree:
+   DropLocation dropLocationForPoint(Point p) {
+        DropLocation location = null;
+      
+BasicTreeUI:
+    protected void paintDropLine(Graphics g) {
+        JTree.DropLocation loc = tree.getDropLocation();
+        if (!isDropLine(loc)) {
+            return;
+        }
+
+        Color c = UIManager.getColor("Tree.dropLineColor");
+        if (c != null) {
+            g.setColor(c);
+            Rectangle rect = getDropLineRect(loc);
+            g.fillRect(rect.x, rect.y, rect.width, rect.height);
+        }
+    }  
+
+alpha map research stuff:
+SON; user:hi, machine: blah; code=3   (inconsistent delimiters hinder us every day!)
+
+BUG: 
+  Import Example Data
+  Delete path terminals
+  right click on first linkedhashmap object after @@meta and add terminal as sibling...
+  2015.3.9:
+    New World has dumb wuc NPE
+    Managed OrientDB params NPE
+    Idea of a "virtual key" - seems like a key but isn't the real key, just an alias for the key....
+    
+    * Modules
+      * 0                      // Technically how a programmer describes it in code often:
+        * name = "Abc"         // Integer indices if a beta-map (list) or some other numeric
+        * desc = "yyyyyy"      // or string UID like a hash code, a GUID, a counter, a serial
+      * 1                      // number, that isn't actually ever shown to the user, depending
+        * name = "Def"         // on the context.
+        * desc = "yyyyyy"
+      * 2
+        * name = "Ghi"
+        * desc = "yyyyyy"
+      * 3
+        * name = "Jkl"
+        * desc = "yyyyyy"
+      
+    But it would be good if the user didn't have to know that under the hood was technically a list...
+
+    * Modules
+      * Module: Abc (0)
+        * name = "Abc"
+        * desc = "yyyyyy"
+        * @@a-meta
+          * @@virtual-key = "Module: ${name} (${@actual-key})"
+      * Module: Def (1)
+        * name = "Def"
+        * desc = "yyyyyy"
+        * @@a-meta
+          * @@virtual-key = "Module: ${name} (${@actual-key})"
+      * Module: Ghi (2)
+        * name = "Ghi"
+        * desc = "yyyyyy"
+        * @@a-meta
+          * @@virtual-key = "Module: ${name} (${@actual-key})"
+      * Module: Jkl (3)
+        * name = "Jkl"
+        * desc = "yyyyyy"
+        * @@a-meta
+          * @@virtual-key = "Module: ${name} (${@actual-key})"
+    
+    @@virtual-key would then be a Finio built-in UI feature... for the purposes of illustrating 
+    to people this phenomemon of people using a map's own values to identify it in some super context.
+    Often times, these values are not unique, and thus do not make for good ACTUAL keys in the super context.
+    But, would be a GREAT feature to add to Finio for usability's sake.
+    
+- AlphaSci:
+--- Drag & Drop node moving
+--- Combine/merge nodes together on right-click
+--- Hover on text that has scrolled off of the screen (select how you want to visualize the string like in eclipse)
+----- Bare minimum, show a String-valued node in a text field somewhere with wrapping
+--- wrap text in tree labels
+--- or truncate text in tree labels
+--- edit string in a text area in tree nodes
+--- Side-by-side scrolling/linking between the tree and source document! with highlighting
+--- Being able to get traceability to the LINE!!!!
+ 

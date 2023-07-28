@@ -1,0 +1,3 @@
+version = ${project.version}
+timestamp = ${product.build.timestamp}
+svn_branch = ${svn.branch.label}

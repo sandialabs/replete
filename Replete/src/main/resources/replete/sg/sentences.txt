@@ -1,0 +1,345 @@
+Sentence Generator
+==================
+Date: Fri May 02 16:47:12 MDT 2008
+# Sentences: 15
+Arguments: <none>
+Random Seed: 19632
+
+1.  We don't let Carl and Emily know again.  
+2.  I let myself do it.  
+3.  You shouldn't satisfy the requirements enough.  [S: sing/fam]
+4.  You love to sing.  [S: sing/form]
+5.  Carol doesn't try to think profoundly.  
+6.  Sam shouldn't kill him again.  
+7.  Rose and David need to borrow them (the notes) from David and me.  
+8.  I should hear the voices.  
+9.  Tony and I shouldn't look for the keys.  
+10.  Y'all can lend us it (your car) again.  [S: plu/form]
+11.  Mary stops fitting in the car.  
+12.  You try to tell the story to Louis and me.  [S: sing/form]
+13.  I have to listen to it (the radio station) again.  
+14.  He is not obligated to speak you.  [IO: plu/form]
+15.  I will leave mad.  
+
+Sentence Generator
+==================
+Date: Fri May 02 16:47:14 MDT 2008
+# Sentences: 15
+Arguments: <none>
+Random Seed: 31552
+
+1.  Don't we eat it (the chicken)?  
+2.  He doesn't continue cleaning the table.  
+3.  You are not going to clean the mirror.  [S: sing/form]
+4.  Maybe I satisfy my mother.  
+5.  He is closing them (the windows).  
+6.  Eric and I stop crying a lot.  
+7.  My eyes are not hurting so much.  
+8.  Don't find them (the keys)!  [S: sing/fam]
+9.  Y'all don't sing softly.  [S: plu/fam]
+10.  We don't want to speak Louis and Robert.  
+11.  We like to know the password.  
+12.  I don't stop knowing enough again.  
+13.  Don't y'all kill him?  [S: plu/form]
+14.  My eyes are going to hurt so much.  
+15.  We shouldn't know her name.  
+
+Sentence Generator
+==================
+Date: Sun May 04 20:00:40 MDT 2008
+# Sentences: 15
+Arguments: <none>
+Random Seed: 23336
+
+1.  Y'all don't continue to give the keys to yourselves.  [S: plu/fam][IO: plu/fam]
+2.  Y'all let yourselves ascertain them (the whereabouts).  [S: plu/fam][DO: plu/fam]
+3.  Y'all are not loving that child deeply.  [S: plu/form]
+4.  Y'all begin to ascertain it (the solution).  [S: plu/fam]
+5.  He would be bored.  
+6.  It's possible that we know.  
+7.  They have ascertained the solution.  
+8.  They don't like to miss my mother a lot.  
+9.  You have contained it (the fire) enough.  [S: sing/form]
+10.  You shouldn't play it (the guitar) for yourself.  [S: sing/form][IO: sing/form]
+11.  He is not going to do it.  
+12.  Y'all can miss my mother a lot.  [S: plu/form]
+13.  Y'all must listen to it (the music).  [S: plu/form]
+14.  Christine and Carl haven't loved her (that child) deeply.  
+15.  You shouldn't sell Sam and me the old house.  [S: sing/form]
+
+Sentence Generator
+==================
+Date: Sun May 04 20:07:16 MDT 2008
+# Sentences: 15
+Arguments: -t=preterite 
+Random Seed: 15600
+
+1.  He forgot.  
+2.  You ascertained the account number carefully.  [S: sing/form]
+3.  We lent $900 to them again.  
+4.  Y'all played it (the game).  [S: plu/form]
+5.  Y'all fell into the water.  [S: plu/form]
+6.  Emily bought an apple for them.  
+7.  You missed my father.  [S: sing/form]
+8.  She contained it (the anger).  
+9.  She cried a lot.  
+10.  They brought it (lunch).  
+11.  He thought profoundly.  
+12.  I lent my car to you.  [IO: plu/form]
+13.  Anna and Sam brought it (a message).  
+14.  We constructed it (a gate) carefully.  
+15.  I defeated the other team.  
+
+Sentence Generator
+==================
+Date: Sun May 04 20:07:40 MDT 2008
+# Sentences: 15
+Arguments: <none>
+Random Seed: 54312
+
+1.  David tries to miss her (John's sister).  
+2.  Y'all don't stop coming in the evening.  [S: plu/form]
+3.  I can run behind the bus.  
+4.  You can look for them (the keys).  [S: sing/fam]
+5.  Daniel and I want to defeat it (the other team).  
+6.  You will have come.  [S: sing/form]
+7.  We begin selling her the old house.  
+8.  I must be short.  
+9.  He tries to satisfy my mother.  
+10.  I can't play the game in the house.  
+11.  I begin singing a song.  
+12.  You don't look for the keys.  [S: sing/form]
+13.  Leave!  [S: plu/form]
+14.  Don't clean it (the table)!  [S: plu/fam]
+15.  You don't have to go.  [S: sing/form]
+
+Sentence Generator
+==================
+Date: Sun May 04 20:07:41 MDT 2008
+# Sentences: 15
+Arguments: <none>
+Random Seed: 57712
+
+1.  They can't close the windows.  
+2.  My eyes will hurt.  
+3.  Don't know her name!  [S: sing/form]
+4.  They shouldn't fit in the bed.  
+5.  Do they contain the anger?  
+6.  You don't stop knowing him (that homeless person).  [S: sing/fam]
+7.  She will kill him (the child) violently.  
+8.  Perhaps Emily doesn't put it (the movie) in the box.  
+9.  They can't fit in the car.  
+10.  I let you watch the television.  [DO: sing/fam]
+11.  I don't plan on cleaning the table.  
+12.  It's not possible that I find it (some blue toys).  
+13.  Y'all should close the curtains.  [S: plu/form]
+14.  You allow Emily and Vivian to fall to the ground.  [S: sing/form]
+15.  Carol tells the truth to Carol.  
+
+Sentence Generator
+==================
+Date: Sun May 04 20:07:42 MDT 2008
+# Sentences: 15
+Arguments: <none>
+Random Seed: 39304
+
+1.  Perhaps they don't know enough.  
+2.  Emily doesn't love to kill her quietly.  
+3.  I don't tell the story to Patricia.  
+4.  They are not already there.  
+5.  Joseph and I don't love to be bored.  
+6.  Vivian hasn't known the password.  
+7.  Y'all will contain the anger enough.  [S: plu/form]
+8.  You would cry a lot.  [S: sing/form]
+9.  Perhaps Rose and George miss my father.  
+10.  I begin to do it to you.  [IO: sing/fam]
+11.  It's possible that y'all remember again.  [S: plu/form]
+12.  We keep playing in the house.  
+13.  He will do it.  
+14.  Do you ascertain it (the solution)?  [S: sing/form]
+15.  It's important that I eat the chicken.  
+
+Sentence Generator
+==================
+Date: Sun May 04 20:07:43 MDT 2008
+# Sentences: 15
+Arguments: <none>
+Random Seed: 19784
+
+1.  I don't remember the date.  
+2.  I don't contain it (the anger).  
+3.  You bought an apple for her.  [S: sing/form]
+4.  We do lend $20 to her.  
+5.  We come.  
+6.  My eyes don't stop hurting so much.  
+7.  Doesn't she come before noon?  
+8.  I do speak her.  
+9.  I don't have to close my eyelids.  
+10.  John and Rose try to ascertain it (the name) carefully.  
+11.  You stop watching the TV show.  [S: sing/fam]
+12.  Y'all can run without shoes.  [S: plu/fam]
+13.  We are not doing that.  
+14.  We have played the game.  
+15.  I don't need to write them (the messages) to you again.  [IO: plu/form]
+
+Sentence Generator
+==================
+Date: Sun May 04 20:07:44 MDT 2008
+# Sentences: 15
+Arguments: <none>
+Random Seed: 29408
+
+1.  We love that child.  
+2.  I don't continue singing.  
+3.  They came in the morning.  
+4.  Eric and I go a little further.  
+5.  They don't need to fit in the car.  
+6.  Don't write them the note!  [S: sing/form]
+7.  Y'all won't have borrowed $100 from Robert.  [S: plu/fam]
+8.  I can't lend them $20.  
+9.  They like to find them (the keys).  
+10.  You stop containing the insects.  [S: sing/form]
+11.  They will have listened to the radio station.  
+12.  It's not important that Tony and I find them (the keys) again.  
+13.  My head is going to hurt again.  
+14.  You love to fall to the ground.  [S: sing/form]
+15.  I remembered.  
+
+Sentence Generator
+==================
+Date: Sun May 04 20:07:45 MDT 2008
+# Sentences: 15
+Arguments: <none>
+Random Seed: 3432
+
+1.  Y'all won't have missed my mother a lot.  [S: plu/form]
+2.  It's not possible that Tony and Martha know themselves.  
+3.  Vivian and I are not going to ascertain it (the account number).  
+4.  I don't need to know enough.  
+5.  Martha and I would sell you it (the old house).  [IO: sing/form]
+6.  I try to ascertain them (the whereabouts) carefully.  
+7.  My eyes stop hurting.  
+8.  They are opening it (an account).  
+9.  She runs.  
+10.  They shouldn't clean it (the table).  
+11.  I plan to give them (some pencils) to you.  [IO: plu/form]
+12.  We are not obligated to speak ourselves clearly again.  
+13.  Don't know them (the facts)!  [S: plu/form]
+14.  I am going to borrow $55 from them.  
+15.  We shouldn't satisfy your girlfriend.  
+
+Sentence Generator
+==================
+Date: Sun May 04 20:07:45 MDT 2008
+# Sentences: 15
+Arguments: <none>
+Random Seed: 28936
+
+1.  She is not obligated to buy it (a better door).  
+2.  You begin borrowing it (the bicycle) from them.  [S: sing/form]
+3.  They like to forget the password again.  
+4.  You borrowed $100 from me.  [S: sing/form]
+5.  We need to defeat it (the other team).  
+6.  Y'all shouldn't find the keys again.  [S: plu/fam]
+7.  It's important that I know a lot of people.  
+8.  We want to come.  
+9.  Y'all don't intend to ascertain the solution.  [S: plu/fam]
+10.  Y'all begin containing them (the insects).  [S: plu/form]
+11.  She stops doing it to me.  
+12.  Maybe they satisfy my mother.  
+13.  You do cry.  [S: sing/form]
+14.  It's not important that we speak Patricia.  
+15.  They do satisfy your girlfriend.  
+
+Sentence Generator
+==================
+Date: Sun May 04 20:07:46 MDT 2008
+# Sentences: 15
+Arguments: <none>
+Random Seed: 51656
+
+1.  Perhaps she fits in the car again.  
+2.  He finds it (some blue toys).  
+3.  She won't listen to it (the music).  
+4.  Perhaps Louis doesn't it to you again.  [IO: sing/form]
+5.  We like to clean it (the mirror).  
+6.  Perhaps Sam doesn't clean it (the mirror).  
+7.  It's important that you satisfy her (my mother) enough.  [S: sing/fam]
+8.  You haven't cried a lot.  [S: sing/form]
+9.  We intend to miss him (my father).  
+10.  I don't like to think profoundly.  
+11.  Perhaps we don't read Vivian and Gabrielle.  
+12.  Louis needs to construct a gate.  
+13.  Louis loves to be happy.  
+14.  Christine has heard it.  
+15.  Carol and I don't leave the meeting without an agreement.  
+
+Sentence Generator
+==================
+Date: Sun May 04 20:07:47 MDT 2008
+# Sentences: 15
+Arguments: <none>
+Random Seed: 3112
+
+1.  Let's not leave it (the party) without an agreement!  
+2.  I stop knowing enough.  
+3.  Eric must kill himself.  
+4.  Perhaps Patricia and Robert don't it (that).  
+5.  Joseph and Eric don't tell Helen the truth.  
+6.  You won't have ascertained it (the name) carefully.  [S: sing/form]
+7.  Perhaps y'all fit in the bed.  [S: plu/fam]
+8.  Y'all should speak them clearly.  [S: plu/form]
+9.  They can't play the flute for Carol and Rose.  
+10.  You contained them (the insects).  [S: sing/form]
+11.  Joseph and I don't love to sing it (the song) softly again.  
+12.  I should write the note to you.  [IO: plu/form]
+13.  You should remember when the party is.  [S: sing/fam]
+14.  It's important that he construct the tower.  
+15.  Y'all are going to sell it (the old house) to Eric and Patricia.  [S: plu/form]
+
+Sentence Generator
+==================
+Date: Sun Oct 23 15:57:34 MDT 2011
+# Sentences: 15
+Arguments: <none>
+Random Seed: 34760
+
+1.  She hasn't killed him violently.  
+2.  You like to tell yourself it (the story).  [S: sing/fam][IO: sing/fam]
+3.  They don't intend on cleaning it (the mirror).  
+4.  You intend to know them (the facts).  [S: sing/form]
+5.  Rose and I sang it (a song) loudly.  
+6.  He should do it (that) to Patricia.  
+7.  Y'all don't play the game outside.  [S: plu/fam]
+8.  You won't have written Gabrielle and Joseph.  [S: sing/fam]
+9.  Y'all begin looking for the keys.  [S: plu/form]
+10.  We bought it (a better door).  
+11.  Don't find them (the keys)!  [S: plu/fam]
+12.  Mary and I can remember them (the number).  
+13.  Robert and I would be gay again.  
+14.  You don't like to give the keys to me.  [S: sing/fam]
+15.  Y'all don't ascertain it (the account number).  [S: plu/form]
+
+Sentence Generator
+==================
+Date: Sun Oct 23 15:57:40 MDT 2011
+# Sentences: 15
+Arguments: <none>
+Random Seed: 18528
+
+1.  You will give the keys to me.  [S: sing/fam]
+2.  I stop telling him it (the story).  
+3.  You would fall into the water.  [S: sing/form]
+4.  Y'all remembered them (the number).  [S: plu/form]
+5.  Y'all have to miss my mother a lot.  [S: plu/fam]
+6.  They can open it (an account).  
+7.  They don't continue to run.  
+8.  He does remember.  
+9.  You begin to know enough.  [S: sing/form]
+10.  William doesn't love to tell them them (the details).  
+11.  Louis doesn't try to listen to the song.  
+12.  Y'all don't plan on putting it (the tape) under the door.  [S: plu/fam]
+13.  They do run.  
+14.  They stop opening it (the heavy door).  
+15.  Y'all won't lend $900 to me.  [S: plu/form]
+

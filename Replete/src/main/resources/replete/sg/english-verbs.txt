@@ -1,0 +1,193 @@
+
+##########################################
+## English Verbs for Sentence Generator ##
+##      verbs.colorado.edu/~trumbo      ##
+##########################################
+
+# Format:
+# <verb-inf>, <verb-pres-part>, <verb-past-part>, <verb-past-tense>, <trans-type>,
+#    <io-type>, <adverbs>, <dir-objs>, <alt-subjs>, <io-prep>, <io-after-only>,
+#    <io-reflex-allowed>, <adverb-required>, <forbidden-types>
+
+# The <verb-inf> is the infinitive without the "to" (i.e. "jump")
+# The <verb-present-part> is the present participle of the verb (i.e. "jumping")
+# The <verb-past-part> is the past participle of the verb (i.e. "jumped")
+# The <verb-past-tense> is the past tense of the verb (i.e. "jumped")
+
+# The <trans-type> is one of "TRANS", "INTRA", or "TR_INTR"
+#  - Default: INTRA
+#  - The transitivity of the verb.  An intransitive verb does not take a direct
+#    object.  A transitive verb takes a direct object. However, a verb can have
+#    both intransitive and transitive senses ("She sings well." and "She sings
+#    only modern songs.").  Specify INTRA if the verb should never have a DO,
+#    TRANS if the verb should always choose a DO from the <dir-objs> list and
+#    TR_INTR if you want the verb to choose a direct object from the list only
+#    50% of the time.
+
+# The <io-type> is one of "IO_NO", "IO_YES", "IO_OPT"
+#  - Default: IO_NO
+#  - Whether the verb is allowed to or is forced to take an indirect object.
+#    If IO_YES is specified, the verb will always be shown with an indirect
+#    object.  If IO_OPT is specified, the verb will be shown with an IO 50% of
+#    the time.  IO_NO does not allow IO for the verb.  Some verbs don't allow
+#    indirect objects like "to think" (we never think to or for someone).  But
+#    like "to say" or "to tell" almost always has one.
+
+# The <adverbs> is a list like "L(word/word/word)" or "R(word/word/word)" or "null"
+#  - Default: null
+#  - If a list is supplied (not "null" or no argument) then 50% of the time one
+#    will be randomly selected from the list and placed at the end of the
+#    sentence.  Each "word" is a actually a "phrase" that can contain any
+#    characters and punctuation other than "," or "/".  For example:
+#    "L(quite quickly/a little bit/softly)".  You can use "R" instead of "L" to
+#    make it "required" that a word be chosen from the list (i.e. instead of 50%
+#    chance... 100% chance).  Same effect as setting <adverb-required> to true.
+#    IMPORTANT: <adverbs> can contain non-adverb words like prepositional phrases
+#    and adjectives.  In retrospect, this should be called <modifiers>.
+
+# The <dir-objs> is a list like "L(.word/:word/*word)" or "null"
+#  - Default: null
+#  - The list of direct objects that the verb can take.  A direct object is
+#    added if this option is non-null and either TRANS OR TR_INTR is supplied.
+#    But if TR_INTR is supplied then the direct object will only be added 50% of
+#    the time.  Each "word" is actually a phrase that can contain any characters
+#    and punctuation other than "," or  "/" or ";".  Each "word" starts with a
+#    ".", ":", or an "*".  The "." implies the word is singular, the ":" implies
+#    plural.  Singular words are replaced with "it" 50% of the time.  Plural
+#    words are replaced with "them" 50% of the time.  The "*" disallows any
+#    pronoun replacement ever.  The actual word chosen is selected randomly from
+#    the list.  You can also specify the exact pronoun to use if it is replace by
+#    one using ";".  For example: "L(.my mom;her)".
+#    Form:   (*|.|:)<obj>[;<prn>]
+#    Where <obj> can contain two special characters, & and ^.
+
+# The <alt-subjs> is a list like "L(.My arm/.My head/:My feet)" or "null"
+#  - Default: null
+#  - This list, if supplied, overrides the normal selection of "human"
+#    subjects.  If this list is given then a subject is randomly selected from
+#    this list instead of the usual 6 possibilities.  The subjects in the list
+#    should all be 3rd person and be preceded by "." or ":" to indicate number.
+
+# The <io-prep> can be "to" or "for" or any other preposition
+#  - Default: to
+#  - When an IO exists for the sentence, and it has been chosen that the IO
+#    will be placed at the end of the sentence, this defines the preposition to
+#    be used.  Most verbs will require either "to" or "for".  For example, we
+#    SPEAK "to" someone, but we BUY something "for" someone - both are uses of
+#    the indirect object.  Most verbs use "to".  You could use any other
+#    preposition though - even "from" (even if it won't technically translate
+#    to a indirect object).
+
+# The <io-after-only> can be "false" or "true"
+#  - Default: false
+#  - Whether the indirect object can be placed after the direct object.  In
+#    many sentences the IO can come before or after the DO as in "He bought me
+#    the toy." or "He bought the toy for me." If the IO comes afterwards then the
+#    preposition "to" or "for" is required.  However, for some verbs placing the
+#    IO before the DO (w/o to or for or other preposition) can sound a little
+#    awkward.  For example: "John plays me the piano on Saturday nights."  So you
+#    can force the IO to come after the DO when this is set to true: "John plays
+#    the piano for me on Saturday nights."  If not set to true, the placement
+#    will be chosen at randomly - 50% of time before, 50% of time after.  This
+#    option has no effect unless a DO is defined for the verb.
+
+# The <io-reflex-allowed> can be "false" or "true"
+#  - Default: true
+#  - Whether the indirect object of a sentence can be the same person/number
+#    as the subject of the sentence.  Imagine this sentence: "We sell our
+#    house to ourselves."  It is grammatical but may not be the kind of
+#    sentence you want the Sentence Generator to produce.
+
+# The <adverb-required> can be "false" or "true"
+#  - Default: false
+#  - Whether an adverb should be selected from the list 100% of the time
+#    instead of 50% of the time.
+
+# The <forbidden-types> is a string
+#  - Default: null
+#  - Has two variations.  If the string begins with a - then the string
+#    indicates all the sentence types that the verb is NOT allowed to partake in.
+#    If the string begins with a + then the string indicates the ONLY sentence
+#    types that the verb is allowed to partake in.  Here is a list of all current
+#    sentence types:
+#      PRESENT,       DO,
+#      COMMAND,       WANT_TO,
+#      TRY_TO,        NEED_TO,
+#      GOING_TO,      PROGRESS,
+#      QUESTION_PRES, PRES_SUBJ,
+#      LIKE_TO,       LOVE_TO,
+#      HAVE_TO,       SHOULD_TO,
+#      WILL,          WOULD,
+#      PERHAPS,       CAN,
+#      ALLOW,         STOP,
+#      INTEND_TO,     BEGIN_TO,
+#      CONTINUE_TO,   PRES_PERF,
+#      FUT_PERF
+#    For example if a verb "to have" is not supposed to participate in the sentence types HAVE_TO and PROGRESS
+#    (i.e. "John has to have a bite."  and  "John is having a bite.") then you should supply this string:
+#    "-HAVE_TO/PROGRESS".
+#    For example if a verb "to hurt" only makes sense within two sentence types PRESENT and GOING_TO
+#    (i.e. "My head hurts."  and  "My head is going to hurt.") then you should supply this string:
+#    "+PRESENT/GOING_TO".
+
+# Principal Parts of a Spanish Verb (possibly):
+# 1. Infinitive
+# 2. 1st Singular Present Indicative (hago)
+# 3. 1st Singular Present Subjunctive (vaya)
+# 4. Present Participle (durmiendo)
+# 5. Past Participle (puesto)
+
+# Principal Parts of a English Verb (possibly):
+# 1. Infinitive / 1st Singular Present Indicative (swim)
+# 2. Present Participle (swimming/naming)
+# 3. Past Participle (written)
+# 4. Past Tense (wrote)
+
+run,       running,      run,         ran,         INTRA,   IO_NO,  L(fast/behind the bus/without shoes)   ## correr
+go,        going,        gone,        went,        INTRA,   IO_NO,  L(real soon/to the beach/a little further)   ## ir
+come,      coming,       come,        came,        INTRA,   IO_NO,  L(in the morning/before noon/at dawn/in the evening)   ## venir
+leave,     leaving,      left,        left,        TR_INTR, IO_NO,  L(early/mad/without an agreement), L(.the party/.the meeting)   ## leave
+fall,      falling,      fallen,      fell,        INTRA,   IO_NO,  R(to the ground/often/in the bathroom/into the water)   ## caer
+cry,       crying,       cried,       cried,       INTRA,   IO_NO,  L(a lot/silently)   ## llorar
+give,      giving,       given,       gave,        TRANS,   IO_YES, , L(.the pencil/:some pencils/:the keys/.the receipt)   ## dar
+clean,     cleaning,     cleaned,     cleaned,     TRANS,   IO_NO, , L(.the table/.the mirror)   ## limpiar
+satisfy,   satisfying,   satisfied,   satisfied,   TRANS,   IO_NO,  L(enough), L(.your girlfriend;her/:the requirements/.my mother;her)   ## satisfacer
+put,       putting,      put,         put,         TRANS,   IO_NO,  R(in the box/in the machine/on the table/under the door), L(.the tape/.the movie/.the letter)   ## poner
+contain,   containing,   contained,   contained,   TRANS,   IO_NO,  L(enough), L(.the fire/.the anger/:the insects)   ## contener
+fit,       fitting,      fit,         fit,         INTRA,   IO_NO,  R(in the car/in the truck/in the bus/in the bed)   ## caber
+defeat,    defeating,    defeated,    defeated,    TRANS,   IO_NO, , L(.the other team/.the final player;him/.the Spanish army)   ## vencer
+tell,      telling,      told,        told,        TRANS,   IO_YES, , L(:the details/.the truth/.the news/.the story)   ## decir, contar
+speak,     speaking,     spoken,      spoke,       INTRA,   IO_YES, L(clearly)   ## hablar
+sing,      singing,      sung,        sang,        TR_INTR, IO_NO,  L(loudly/softly), L(.the song/:the songs/.a song)   ## cantar
+listen to, listening to, listened to, listened to, TRANS,   IO_NO, , L(.the music/.the song/.the radio station)   ## escuchar
+write,     writing,      written,     wrote,       TR_INTR, IO_YES, , L(.the letter/:the messages/.the note)   ## escribir
+hear,      hearing,      heard,       heard,       TRANS,   IO_NO, ,      L(.the voice/:the voices/.that sound/*that/.it/:those shouts/*well)   ## oir
+know,      knowing,      known,       knew,        INTRA,   IO_NO,  L(enough), , , , , , , -PROGRESS/CONTINUE_TO   ## saber
+know,      knowing,      known,       knew,        TRANS,   IO_NO, , L(:the facts/.the password/.her name), , , , , , -PROGRESS/CONTINUE_TO   ## saber
+know,      knowing,      known,       knew,        TRANS,   IO_NO, , L(*^/:a lot of people;them/.John's mom;her/.that homeless person;him), , , , , , -PROGRESS/CONTINUE_TO   ## conocer
+think,     thinking,     thought,     thought,     INTRA,   IO_NO,  L(a lot/profoundly)   ## pensar
+ascertain, ascertaining, ascertained, ascertained, TRANS,   IO_NO,  L(carefully), L(.the solution/.the name/:the whereabouts/.the account number)
+open,      opening,      opened,      opened,      TRANS,   IO_NO, , L(.the heavy door/.an account)   ## abrir
+close,     closing,      closed,      closed,      TRANS,   IO_NO, , L(:the windows/:the curtains/:& eyelids)   ## cerrar
+remember,  remembering,  remembered,  remembered,  TR_INTR, IO_NO, , L(:the number/.the date/:their names/*when the party is/.the color of her blouse), , , , , , -PROGRESS   ## recordar
+forget,    forgetting,   forgotten,   forgot,      TR_INTR, IO_NO, , L(.the price/*where the keys are/*to bring the tickets/.the dog's name/:her exact words/.the password), , , , , , -PROGRESS   ## olvidar
+miss,      missing,      missed,      missed,      TRANS,   IO_NO,  L(a lot), L(.my mother;her/.my father;him/.John's sister;her)   ## extranar
+love,      loving,       loved,       loved,       TRANS,   IO_NO,  L(deeply), L(.that child;her/.that child;him/:those children;them/.& daughter;her/.& son;him)   ## querer
+do,        doing,        done,        did,         TRANS,   IO_OPT, , L(.it/.that), , , true   ## hacer
+construct, constructing, constructed, constructed, TRANS,   IO_NO,  L(carefully), L(.the building/:the walls/.the tower/:some steps/.a gate)   ## construir
+play,      playing,      played,      played,      TR_INTR, IO_YES, , L(.the guitar/.the flute/:the guitars/:the flutes/.the violin/:the violins), , for, true   ## tocar
+play,      playing,      played,      played,      TR_INTR, IO_NO,  L(outside/in the house), L(.the game)   ## jugar
+bring,     bringing,     brought,     brought,     TRANS,   IO_OPT, , L(.a cake/:some gifts/.lunch/.a message), , for   ## traer
+buy,       buying,       bought,      bought,      TRANS,   IO_OPT, , L(:some new windows/.an apple/.a better door), , for   ## comprar
+sell,      selling,      sold,        sold,        TRANS,   IO_YES, , L(.the old house), , , , false   ## vender
+eat,       eating,       eaten,       ate,         TRANS,   IO_NO, , L(.the food/.the chicken/:the sweets)   ## comer
+watch,     watching,     watched,     watched,     TRANS,   IO_NO, , L(.the television/.the TV show)   ## mirar
+look for,  looking for,  looked for,  looked for,  TRANS,   IO_NO, , L(:the keys/.John's apartment/.the jacket)   ## buscar
+find,      finding,      found,       found,       TRANS,   IO_NO, , L(.a new life/.some blue toys/:the keys)   ## encontrar
+read,      reading,      read,        read,        TR_INTR, IO_OPT, , L(.a difficult book/.the newspaper/.a magazine)   ## leer
+kill,      killing,      killed,      killed,      TRANS,   IO_NO,  L(violently/quietly), L(.the child;him/:the children;them/*him/*her/:people/.the dog/.the president;him/*^)   ## matar, suicidarse
+be,        being,        been,        was,         TRANS,   IO_NO,  R(happy/sad/bored/tired/boring/hateful/angry/gay/already there/tall/short), , , , , , , -DO   ## ser, estar
+hurt,      hurting,      hurt,        hurt,        INTRA,   IO_NO,  L(so much), , L(.My head/.My arm/:My feet/:My eyes/:Your legs/.Your stomach/.Your hand), , , , , +PRESENT/GOING_TO/WILL/CONTINUE_TO/PROGRESS/STOP   ## doler
+borrow,    borrowing,    borrowed,    borrowed,    TRANS,   IO_YES, , L(*$100/*$55/*so much/.the bicycle/:the notes), , from, true, false, , -COMMAND
+lend,      lending,      lent,        lent,        TRANS,   IO_YES, , L(*$900/*$20/.& car), , , , false
+

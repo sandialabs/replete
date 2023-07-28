@@ -1,0 +1,9 @@
+Subject: JUnit Test Email - Confirm ${subject}
+
+Dear ${name},<BR><BR>
+
+This is to confirm you are the recipient of this email.<BR><BR>
+
+Sincerely,<BR><BR>
+
+${sig}<BR><BR>

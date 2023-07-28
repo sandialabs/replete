@@ -1,0 +1,163 @@
+
+Right now parallel testing is very broken and incomplete.
+
+Test: stagegraph with cardinality in addition: link already exists between out and in, card max
+
+Current Priority:
+
+    Inputs could technically be given a cardinality range
+    (min-max) so as to support "var args" and "array"/"list"
+    parameters in such a way that the end user of a GUI
+    is able to specify the elements of this list.  This will 
+    affect whether or not something is considered a source.
+    Some work has been placed into this, but not finished.
+    From what I can tell it is implemented in the descriptors
+    just not in the actual input maps, nor in the graph's
+    add link which only allows an input desc to get linked from
+    one output descriptor.
+
+Next Feature:
+
+    The pipeline's execute methods could return an ExecuteSummary
+    object (similar to Parallel.execute) detailing execution 
+    meta data.  This could include for example, which stages were 
+    ultimately executed and how long each stage took.  This could
+    be useful to a UI.  Can't wait to get to this but need to 
+    finish abstract stage first!!!
+    
+Cool & Important (But Non-Trivial): 
+        
+    Make a framework-based solution to tie any stage's "parameter"
+    and convert it into an "input"  For example, let's say that
+    the JPanel representing the stage has a "parameter" for cluster
+    size that the user can specify in a TEXT FIELD.  BUT the user
+    actually wants that value calculated by some other means.  It
+    would be nice if the framework supported being able to plug-in
+    any output from another stage into PARAMETERS, not just INPUTS.
+    Discussion: seems like parameters will some day morph into full-fledged
+    inputs somehow, someway.
+ 
+Less Important:
+ 
+    Another execute param (ala Parallel.execute) that allows you to
+    ask the pipeline to execute via LAYERS or first come first served
+    (the MOST parallel).  First come first served means, whenever a 
+    stage's inputs have all been satisfied, it is added to the thread
+    pool right at that moment, not necessarily only when all of its
+    ancestor stages have completed.  This has been enabled by removing
+    the restriction of reading outputs only after a stage has been
+    fully executed.  The complication is that what if a stage sets an 
+    output multiple times during execution.  Solution: just make any
+    child stages that have already begun dirty.  How to do this?  Add
+    to every stage a parallel set of inputs called 'pending inputs'.
+    A stage reads from it's 'inputs' but a pipeline moves completed 
+    outputs to child stages 'pending inputs' and uses that as an 
+    additional input to the dirtiness of the child stage.
+
+Other Stuff:
+    
+    Pending inputs so that if outputs change after a dependent stage has
+    already begun executing, those new outputs/inputs can be cached and
+    not affect the running stage.  Also this would go into the determination
+    of dirty.
+    
+    Builder pattern for input/output descriptors
+
+Weirder:
+    
+ 1. Could have default input values as a framework construct.
+    
+ 2. Could implement blackboard layer / options that accumulates all
+    outputs into a single available space where stages can look up
+    information that might be pertinent to them.  This would be
+    handled at the Pipeline layer and as seamless as possible to
+    the stage.
+    
+ 3. Include a "volatile" or "temporary" boolean on OutputDescriptors
+    that would allow the pipeline framework to automatically nullify
+    output references of stages that are no longer needed (all downstream
+    stages have executed).  This would be for memory management purposes.
+    
+ 4. Allow framework to automatically clone outputs so that downstream
+    stages cannot modify output objects of previous stages.  this
+    could be also a configuration property of the pipeline/execution method.
+        
+ 5. Building upon Pipeline.addDependency, you could have a Pipeline.
+    requireNonconcurrent(A, B, C, D).  This would just be a wrapper
+    around addDependency that would execute an algorithm that would
+    try to determine which dependency ordering would have the 
+    least impact on parallelism.  BUT, to be honest that is a hard
+    problem, not just from a graph algorithm standpoint, but even if
+    you got the right graph algorithm, you'll never know actual
+    stage runtimes, so your graph algorithm could only be informed by
+    node depth.  So it's best not to have this feature and force the
+    developer to determine which stages should come first so that
+    they unblock other unrelated stages as early as possible.
+        pipeline.addDisjoint(A, B, C, D)  // Must never execute concurrently
+
+TESTS: 
+  checkRequiredInputs for pipeline
+  canLink, 
+  hasInput 
+  removeInput, 
+  removeLink?, 
+  setInput with the wrong type in pipeline
+  checkLink now allows the reverse inheritance,  ?
+  ConverstionStage<I, O>, testing whether or not something
+      is a source / sink (since we upgraded the logic), 
+  stagenotexecuted exception for pipeline 
+  stage executed or not... published output descriptors, 
+  all output descriptors, 
+  all the unmodifiable return objects.
+  pipeline's validate stage conditions,
+  published outputs, input cardinality
+  
+AbstractAtomicStage/AbstractStage/Stage Testing parts
+    id x
+    default stage name x
+    getParent x
+    isDirty x
+    isExecuted x
+    isError x
+    getError x
+    getExecuteSummary x
+      executeAttemptedCount,succ,fail x
+      lastError x
+      duration x
+    getInputDes*
+      unmod x
+    getOutputDes*
+      unmod x
+    getInput*
+      sorted x
+      unmod x
+      exists x
+    hasInput x
+    setInput*
+      exists x
+      type  x
+      dirty  x
+    removeInput x
+      exist x
+    get*Output*
+      sorted x
+      unmod x 
+      exist x
+      unset x
+    setOutput x
+      exist x
+    regcomplete x
+    checkRequiredInputs x
+    validateInputs x
+    warnings x
+    AAS, Pipeline, StageGraph:
+        getInputsMulti x
+        getInputMulti x
+        setInputsMulti x
+        setInputMulti x
+        addInputMulti x
+        removeInputMulti x
+        cardinality checks x
+        InputDescriptorNode
+        OutputDescriptorNode
+        

@@ -1,0 +1,21 @@
+unit tests: check if associativity works
+
+operator overloading (at runtime, not compile time)
+enhance evaluation context for multiple use cases on the table
+ - needs to be fully-plug-in ized
+
+need to have like a "this" concept for the expression, which refers to the "environment map"
+
+so you can do things like 
+
+  "path ~= /home/file.html" => true|false @ new URL("http://domain.org/home/file.html")
+    path would be a "member" of the environment map, which can just be a POJO
+    and
+  "callOtherFunction(this)" => true|false @ new URL("http://domain.org/home/file.html")
+    this would refer to the entire object passed in
+
+right - needs to work on Map<String, Object> OR POJO!
+
+   Maybe Object... args, where arg[x] is Map or POJO?
+
+this will be so cool...

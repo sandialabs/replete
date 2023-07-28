@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>gov.sandia.avteam.maven</groupId>
+        <artifactId>maven-parent</artifactId>
+        <version>2-SNAPSHOT</version>
+    </parent>
+
+    <groupId>gov.sandia.avteam.replete</groupId>
+    <artifactId>replete-finio</artifactId>
+    <version>2.0.0-SNAPSHOT</version>
+
+    <packaging>jar</packaging>
+
+    <name>Replete Finio</name>
+    <description>
+        This project ....
+    </description>
+
+    <dependencies>
+
+        <!-- JUnit's version is managed by the parent POM -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/log4j/log4j
+             This library has been moved to org.apache.logging.log4j:log4j-core
+             and has versions as large as 2.13.3 -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.13.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.26</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.poi/poi
+             Current version: 4.1.2 -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>4.1.2</version>
+            
+            <exclusions>
+                <!-- tika-parsers is dependent on version 1.15 of commons-codec and 
+                     poi is dependent on 1.13. -->
+                <exclusion>
+                    <groupId>commons-codec</groupId>
+                    <artifactId>commons-codec</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox -->
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>2.0.23</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.docx4j/docx4j-JAXB-ReferenceImpl -->
+        <dependency>
+            <groupId>org.docx4j</groupId>
+            <artifactId>docx4j-JAXB-ReferenceImpl</artifactId>
+            <version>8.2.7</version>
+
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>jcl-over-slf4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.httpcomponents</groupId>
+                    <artifactId>httpclient</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.httpcomponents</groupId>
+                    <artifactId>httpcore</artifactId>
+                </exclusion>
+                
+                <!-- tika-parsers is dependent on version 2.3.4 of error_prone_annotations and 
+                     docx4j-JAXB-ReferenceImpl is dependent on 2.3.3. -->
+                <exclusion>
+                    <groupId>com.google.errorprone</groupId>
+                    <artifactId>error_prone_annotations</artifactId>
+                </exclusion>
+                
+                <!-- tika-parsers is dependent on version 3.0.11 of istack-commons-runtime and 
+                     docx4j-JAXB-ReferenceImpl is dependent on 3.0.8. -->
+                <exclusion>
+                    <groupId>com.sun.istack</groupId>
+                    <artifactId>istack-commons-runtime</artifactId>
+                </exclusion>
+                
+                <!-- tika-parsers is dependent on version 1.15 of commons-codec and 
+                     docx4j-JAXB-ReferenceImpl is dependent on 1.12. -->
+                <exclusion>
+                    <groupId>commons-codec</groupId>
+                    <artifactId>commons-codec</artifactId>
+                </exclusion>
+                
+                <!-- tika-parsers is dependent on version 2.8.0 of commons-io and 
+                     docx4j-JAXB-ReferenceImpl is dependent on 2.6. -->
+                <exclusion>
+                    <groupId>commons-io</groupId>
+                    <artifactId>commons-io</artifactId>
+                </exclusion>
+                
+                <!-- tika-parsers is dependent on version 1.20 of commons-compress and 
+                     docx4j-JAXB-ReferenceImpl is dependent on 1.18. -->
+                <exclusion>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-compress</artifactId>
+                </exclusion>
+                
+                <!-- tika-parsers is dependent on version 3.50 of checker-qual and 
+                     docx4j-JAXB-ReferenceImpl is dependent on 2.8.1. -->
+                <exclusion>
+                    <groupId>org.checkerframework</groupId>
+                    <artifactId>checker-qual</artifactId>
+                </exclusion>
+                
+                <!-- tika-parsers is dependent on version 3.50 of checker-qual and 
+                     docx4j-JAXB-ReferenceImpl is dependent on 2.8.1. -->
+                <exclusion>
+                    <groupId>org.checkerframework</groupId>
+                    <artifactId>checker-qual</artifactId>
+                </exclusion>
+                
+                <!-- tika-parsers is dependent on version 2.3.3 of jakarta.xml.bind-api and 
+                     docx4j-JAXB-ReferenceImpl is dependent on 2.3.2. -->
+                <exclusion>
+                    <groupId>jakarta.xml.bind</groupId>
+                    <artifactId>jakarta.xml.bind-api</artifactId>
+                </exclusion>
+                
+                <!-- tika-parsers is dependent on version 3.11 of commons-lang3 and 
+                     docx4j-JAXB-ReferenceImpl is dependent on 3.9. -->
+                <exclusion>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-lang3</artifactId>
+                </exclusion>
+                
+                <!-- Cortext is dependent on version 1.2.2 of jakarta.activation-api and 
+                     docx4j-JAXB-ReferenceImpl is dependent on 1.2.1. -->
+                <exclusion>
+                    <groupId>jakarta.activation</groupId>
+                    <artifactId>jakarta.activation-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.tika/tika-core
+             Current version: 1.24.1 Needed? -->
+        <dependency>
+            <groupId>org.apache.tika</groupId>
+            <artifactId>tika-core</artifactId>
+            <version>1.25</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.12.1</version>
+        </dependency>
+        
+        <!-- 
+        alloc-instrumenter, docx4j-JAXB-ReferenceImpl, and selenium-server are currently dependent 
+        on older versions of error_prone_annotations. These dependencies are to replace the 
+        excluded version from alloc-instrumenter, docx4j-JAXB-ReferenceImpl, and selenium-server.
+        -->
+        <!-- https://mvnrepository.com/artifact/com.google.errorprone/error_prone_annotations -->
+        <dependency>
+            <groupId>com.google.errorprone</groupId>
+            <artifactId>error_prone_annotations</artifactId>
+            <version>2.3.4</version>
+        </dependency>
+        
+        <!-- 
+        docx4j-JAXB-ReferenceImpl is currently dependent on and older version of istack-commons-runtime.
+        This dependency is to replace the excluded version from docx4j-JAXB-ReferenceImpl.
+        -->
+        <!-- https://mvnrepository.com/artifact/com.sun.istack/istack-commons-runtime -->
+        <dependency>
+            <groupId>com.sun.istack</groupId>
+            <artifactId>istack-commons-runtime</artifactId>
+            <version>3.0.11</version>
+        </dependency>
+        
+        <!-- 
+        docx4j-JAXB-ReferenceImpl and httpclient are currently dependent on and older version of 
+        commons-codec. This dependency is to replace the excluded version from docx4j-JAXB-ReferenceImpl
+        and httpclient.
+        -->
+        <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.15</version>
+        </dependency>
+        
+        <!-- 
+        docx4j-JAXB-ReferenceImpl is currently dependent on and older version of checker-qual.
+        This dependency is to replace the excluded version from docx4j-JAXB-ReferenceImpl.
+        -->
+        <!-- https://mvnrepository.com/artifact/org.checkerframework/checker-qual -->
+        <dependency>
+            <groupId>org.checkerframework</groupId>
+            <artifactId>checker-qual</artifactId>
+            <version>3.5.0</version>
+        </dependency>
+        
+        <!-- 
+        docx4j-JAXB-ReferenceImpl is currently dependent on and older version of jakarta.xml.bind-api.
+        This dependency is to replace the excluded version from docx4j-JAXB-ReferenceImpl.
+        -->
+        <!-- https://mvnrepository.com/artifact/jakarta.xml.bind/jakarta.xml.bind-api -->
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>2.3.3</version>
+        </dependency>
+        
+        <!-- 
+        selenium-server is currently dependent on an older version of guava. This dependency is 
+        to replace the excluded version from selenium-server.
+        -->
+        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>30.0-jre</version>
+        </dependency>
+
+        <!-- Avondale Team Project Dependencies -->
+        <dependency>
+            <groupId>gov.sandia.avteam.cortext</groupId>
+            <artifactId>orbweaver</artifactId>
+            <version>3.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>gov.sandia.avteam.replete</groupId>
+            <artifactId>replete</artifactId>
+            <version>2.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>gov.sandia.avteam.replete</groupId>
+            <artifactId>replete-externals</artifactId>
+            <version>0.1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>gov.sandia.avteam.replete</groupId>
+            <artifactId>replete-scrutinize</artifactId>
+            <version>2.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>gov.sandia.avteam.avondale</groupId>
+            <artifactId>webcomms</artifactId>
+            <version>2.0.0-SNAPSHOT</version>
+        </dependency>
+
+    </dependencies>
+
+</project>

@@ -1,0 +1,1 @@
+The Pattern Interpretation Framework is a set of features that provides highly granular control over that pattern strings that are used to match text.   

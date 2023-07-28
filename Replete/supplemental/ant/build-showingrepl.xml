@@ -1,0 +1,194 @@
+<!--
+
+    Replete Ant Build Script
+    ========================
+    
+    The main targets are:
+
+        build                 - builds JAR after performing a clean
+        clean                 - removes previous build dir
+
+    The final output is:
+
+        build/deploy/replete_M.N.jar
+
+    Intermediate build files are stored in:
+
+        build/temp/
+
+    You can choose to include or exclude the source code in/from
+    the JAR by changing the value of the "include.source" condition
+    variable.
+
+-->
+
+<project name="CommonCode" default="build" basedir=".">
+
+
+    <!--
+        Environment Setup
+    -->
+    
+    <!-- Library identifiers -->
+    <property name="lib_version" value="1.3" />
+    <property name="lib_name_lower" value="replete" />
+    <property name="source_package" value="cc" />
+    <property name="target_package" value="replete" />
+    <property name="target_package_slash" value="replete" />  <!-- Ant doesn't have string replacement -->
+
+    <!-- Input files -->
+    <property name="src_path" location="src" />
+    <property name="lib_path" location="lib" />
+    <property name="readme_file" location="README.txt" />
+
+    <!-- Output files -->
+    <property name="build_base" location="build"/>
+    <property name="build_deploy" location="${build_base}/deploy"/>
+    <property name="build_temp" location="${build_base}/temp" />
+
+        <!-- From workspace -->
+        <property name="build_temp_src" location="${build_temp}/src"/>
+        <property name="build_temp_bin" location="${build_temp}/bin"/>
+
+    <!-- Compile classpath -->
+    <path id="compile.classpath">
+        <fileset dir="lib">
+            <include name="**/*.jar" />
+        </fileset>
+    </path>
+
+    <!-- Conditions -->
+    <condition property="include.source">
+        <istrue value="true" />
+    </condition>
+    <condition property="build.source.zip">
+        <istrue value="false" />
+    </condition>
+    <condition property="change.package">
+        <istrue value="false" />
+    </condition>
+    
+    <property name="target_jvm_version" value="1.5" />
+
+
+    <!--
+        External Targets
+    -->
+
+    <!-- Rebuild without removing existing files first. -->
+    <target name="build" depends="make_app_products, clean_temp"
+        description="Initiates a build of the Common Code library without removing previous build directory.">
+    </target>
+
+    <!-- Complete removal of all build files. -->
+    <target name="clean" description="Removes the build directory completely.">
+        <delete dir="${build_base}" />
+    </target>
+
+
+    <!--
+        Internal Targets
+    -->
+
+    <!-- Copy source files to source destination directory,
+         exclude non-code files.  Does not remove previous
+         source destination directory beforehand. -->
+    <target name="copy_src">
+        <copy todir="${build_temp_src}">
+            <fileset dir="${src_path}">
+                <include name="**/*" />
+            </fileset>
+        </copy>
+    </target>
+    
+    <target name="change_package" if="change.package">
+        <replaceregexp byline="true">
+            <regexp pattern="^package ${source_package}"/>
+            <substitution expression="package ${target_package}" />
+            <fileset dir="${build_temp_src}">
+                <include name="**/*.java"/>
+            </fileset>
+        </replaceregexp>
+        <replaceregexp byline="true">
+            <regexp pattern="^import ${source_package}"/>
+            <substitution expression="import ${target_package}" />
+            <fileset dir="${build_temp_src}">
+                <include name="**/*.java"/>
+            </fileset>
+        </replaceregexp>
+        <move file="${build_temp_src}/${source_package}" 
+            tofile="${build_temp_src}/${target_package_slash}"/>
+    </target>
+    
+    <!-- Copy source files to where the class files will
+         be located if the flag to include source is
+         set to true. -->
+    <target name="copy_src_to_bin" if="include.source">
+        <copy todir="${build_temp_bin}">
+            <fileset dir="${build_temp_src}">
+                <include name="**/*.java" />
+            </fileset>
+        </copy>
+    </target>
+
+    <!-- Copy the compiled class files along with any other
+         non-code files required for the application to the
+         binary destination directory.  We recompile from
+         the source instead of using Eclipse's compiled
+         class files as a safety precaution. If we were to
+         use the compiled class files that Eclipse produces,
+         then we would not need to copy the supplemental
+         files since that is done automatically by Eclipse.
+         Does not remove previous binary destination directory
+         beforehand. -->
+    <target name="copy_bin_with_recompile" depends="copy_src, change_package, copy_src_to_bin">
+
+        <!-- Compile -->
+        <mkdir dir="${build_temp_bin}"/>
+        <javac classpathref="compile.classpath" debug="true" deprecation="true" destdir="${build_temp_bin}" 
+                fork="true" memoryMaximumSize="80m" target="${target_jvm_version}" source="${target_jvm_version}">
+            <src path="${build_temp_src}" />
+            <include name="**/*.java" />
+        </javac>
+
+        <!-- Copy supplemental files -->
+        <copy todir="${build_temp_bin}">
+            <fileset dir="${build_temp_src}" excludes="**/*.java"/>   <!-- .svn dirs excluded by default -->  
+        </copy>
+        
+    </target>
+
+    <!-- Place a JAR file with all the compiled code,
+         supplemental resources and possibly source
+         code into the deploy directory. -->
+    <target name="make_app_jar" depends="copy_bin_with_recompile">
+        <mkdir dir="${build_deploy}"/>
+        <copy todir="${build_temp_bin}" file="${readme_file}" />
+        <jar destfile="${build_deploy}/${lib_name_lower}_${lib_version}.jar" basedir="${build_temp_bin}">
+            <manifest>
+                <attribute name="Main-Class" value="${target_package}.LibInfo" />
+                <attribute name="Class-Path" value="jtattoo.jar mail.jar" />
+            </manifest>
+        </jar>            
+    </target>
+
+    <!-- Place a ZIP file with all the source in the
+         deploy directory if the flag to include source
+         is set to true. -->
+    <target name="make_app_zip" depends="copy_src" if="build.source.zip">
+        <mkdir dir="${build_deploy}"/>
+        <zip destfile="${build_deploy}/${lib_name_lower}_src_${lib_version}.zip" basedir="${build_temp_src}" update="true" />
+    </target>
+
+    <!-- Create the JAR file that holds all the compiled
+         class files and supplemental files that comprise
+         the application and create a zip file containing
+         just the source code. -->
+    <target name="make_app_products" depends="make_app_jar, make_app_zip" />
+
+    <!-- Complete removal of all build files. -->
+    <target name="clean_temp">
+        <delete dir="${build_temp}" />
+    </target>
+
+</project>

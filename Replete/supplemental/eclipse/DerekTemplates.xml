@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="true" context="java" deleted="false" description="" enabled="true" name="sop">System.out.println(${value});</template><template autoinsert="true" context="java" deleted="false" description="" enabled="true" name="sos">System.out.println("${value}");</template><template autoinsert="true" context="java" deleted="false" description="" enabled="true" name="xxam">    //////////////////////////
+    // ACCESSORS / MUTATORS //
+    //////////////////////////</template><template autoinsert="true" context="java" deleted="false" description="" enabled="true" name="xxarraywrap">Arrays.toString(${line_selection})</template><template autoinsert="true" context="java" deleted="false" description="" enabled="true" name="xxbtn">JButton btn${name} = new JButton("${text}");
+btn${name}.addActionListener(new ActionListener() {
+    public void actionPerformed(ActionEvent e) {
+        ${action}
+    }
+});</template><template autoinsert="true" context="java" deleted="false" description="" enabled="true" name="xxbtnm">JButton btn${name} = new MButton("${text}", ImageUtil.getImage("${image}.gif"));
+btn${name}.addActionListener(new ActionListener() {
+    public void actionPerformed(ActionEvent e) {
+        ${action}
+    }
+});</template><template autoinsert="true" context="java" deleted="false" description="" enabled="true" name="xxBufferedReader">BufferedReader reader = null;&#13;
+&#13;
+try {&#13;
+    reader = new BufferedReader(new FileReader(${theFile}));&#13;
+&#13;
+    String line;&#13;
+    while((line = reader.readLine()) != null) {&#13;
+        // Per-line code here&#13;
+    }&#13;
+&#13;
+} catch(Exception e) {&#13;
+    e.printStackTrace();&#13;
+    &#13;
+} finally {&#13;
+    if(reader != null) {&#13;
+        try {&#13;
+            reader.close();&#13;
+        } catch(Exception e) {&#13;
+            e.printStackTrace();&#13;
+        }&#13;
+    }&#13;
+}</template><template autoinsert="true" context="java" deleted="false" description="" enabled="true" name="xxBufferedWriter">BufferedWriter writer = null;&#13;
+&#13;
+try {&#13;
+    writer = new BufferedWriter(new FileWriter(${theFile}));&#13;
+    writer.write(text + "\n");&#13;
+&#13;
+} catch(Exception e) {&#13;
+    e.printStackTrace();&#13;
+    &#13;
+} finally {&#13;
+    if(writer != null) {&#13;
+        try {&#13;
+            writer.close();&#13;
+        } catch(Exception e) {&#13;
+            e.printStackTrace();&#13;
+        }&#13;
+    }&#13;
+}</template><template autoinsert="true" context="java" deleted="false" description="" enabled="true" name="xxcomment">    /////////////
+    // ${name} //
+    /////////////</template><template autoinsert="true" context="java" deleted="false" description="" enabled="true" name="xxcon">    /////////////////
+    // CONSTRUCTOR //
+    /////////////////</template><template autoinsert="true" context="java" deleted="false" description="" enabled="true" name="xxcons">    //////////////////
+    // CONSTRUCTORS //
+    //////////////////</template><template autoinsert="true" context="java" deleted="false" description="" enabled="true" name="xxEmptyFrame">public class ${primary_type_name} extends EscapeFrame {&#13;
+&#13;
+    public ${primary_type_name}() {&#13;
+        super("Title Here");&#13;
+&#13;
+        setLayout(new BorderLayout());&#13;
+        // Add components here&#13;
+&#13;
+        setSize(600, 600);&#13;
+        setLocationRelativeTo(null);&#13;
+    }&#13;
+&#13;
+    public static void main(String[] args) {&#13;
+        ${primary_type_name} frame = new ${primary_type_name}();&#13;
+        frame.setVisible(true);&#13;
+    }&#13;
+}</template><template autoinsert="true" context="java" deleted="false" description="" enabled="true" name="xxfields">    ////////////
+    // FIELDS //
+    ////////////</template><template autoinsert="true" context="java" deleted="false" description="" enabled="true" name="xxfor">for(int ${name} = 0; ${name} &lt; ${total}; ${name}++) {
+    ${body}
+}</template><template autoinsert="true" context="java" deleted="false" description="" enabled="true" name="xxforreverse">for(int ${name} = ${total} - 1; ${name} &gt;= 0; ${name}--) {
+    ${body}
+}</template><template autoinsert="true" context="java" deleted="false" description="" enabled="true" name="xxsysoutwrap">System.out.println(${line_selection});</template><template autoinsert="true" context="java" deleted="false" description="" enabled="true" name="xxtest">    //////////
+    // TEST //
+    //////////</template><template autoinsert="true" context="java" deleted="false" description="" enabled="true" name="xxthreadstart">new Thread() {
+    @Override
+    public void run() {
+        ${code}
+    }
+}.start();</template><template autoinsert="true" context="java" deleted="false" description="" enabled="true" name="xxtostring">    //////////////
+    // toString //
+    //////////////
+
+    @Override
+    public String toString() {
+        return ${retval};
+    }</template></templates>

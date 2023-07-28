@@ -1,0 +1,204 @@
+<!--
+
+    SampleApp Ant Build Script
+    ==========================
+    
+    Example build script for a small application that is to
+    be deployed as a single, self-extracting JAR file and
+    that has its own installer application.    
+
+    The main targets are:
+
+        build                 - just starts a build without removing previous build dir.
+                                (builds faster but could potentially leave behind old files)
+        build_with_full_clean - removes previous build dir and rebuilds.
+                                (takes longer but no unneeded artifacts remain)
+        clean                 - removes previous build dir.
+
+    The final output is:
+
+        build/deploy/SampleAppInstaller.jar
+
+    Intermediate build files are stored in:
+
+        build/temp/
+
+    You can choose to include or exclude the source code by changing
+    the value of the "include.source" condition variable.
+
+-->
+
+<project name="SampleApp" default="build" basedir=".">
+
+
+
+    <!--
+        Environment Setup
+    -->
+
+    <!-- Miscellaneous. -->
+    <property name="app_name_lower" value="sampleapp" />
+
+    <!-- Input files. -->
+    <property name="src_path" location="src" />
+    <property name="lib_path" location="lib" />
+    <property name="util_path" location="util" />
+    <property name="util64_path" location="util64" />
+
+    <!-- Output files. -->
+    <property name="build_base" location="build-${app_name_lower}"/>
+    <property name="build_deploy" location="${build_base}/deploy"/>
+    <property name="build_temp" location="${build_base}/temp" />
+
+        <!-- From workspace. -->
+        <property name="build_temp_src" location="${build_temp}/src"/>
+        <property name="build_temp_bin" location="${build_temp}/bin"/>
+
+        <!-- To prepare deploy directory. -->
+        <property name="build_temp_deploy" location="${build_temp}/deploy"/>
+        <property name="build_temp_deploy_app" location="${build_temp_deploy}/app"/>
+        <property name="build_temp_deploy_src" location="${build_temp_deploy}/src"/>
+        <property name="build_temp_deploy_util" location="${build_temp_deploy}/util"/>
+        <property name="build_temp_deploy_util64" location="${build_temp_deploy}/util64"/>
+
+    <!-- Compile classpath. -->
+    <path id="compile.classpath">
+        <fileset dir="lib">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
+    <condition property="include.source">
+        <istrue value="false" />
+    </condition>
+
+
+
+    <!--
+        External Targets
+    -->
+
+    <!-- Complete clean and rebuild. -->
+    <target name="build_with_full_clean" depends="clean, make_installer_jar"
+        description="Removes the previous build directory completely and initiates a fresh build of the SampleApp application.">
+
+        <!-- Optional call to execute installer right after build (debugging). -->
+        <!--exec executable="cmd">
+            <arg value="/c" />
+            <arg value="C:\path\to\script\install.bat" />
+        </exec-->
+
+    </target>
+
+
+    <!-- Rebuild without removing previous first. -->
+    <target name="build" depends="make_installer_jar"
+        description="Initiates a build of the SampleApp application without removing previous build directory.">
+
+        <!-- Optional call to execute installer right after build (debugging). -->
+        <!--exec executable="cmd">
+            <arg value="/c" />
+            <arg value="C:\path\to\script\install.bat" />
+        </exec-->
+
+    </target>
+
+    <!-- Complete removal of all build files. -->
+    <target name="clean" description="Removes the build directory completely.">
+        <delete dir="${build_base}" />
+    </target>
+
+
+
+    <!--
+        Internal Targets
+    -->
+
+    <!-- Copy source files to source destination directory,
+         exclude non-code files.  Does not remove previous
+         source destination directory beforehand. -->
+    <target name="copy_src">
+        <copy todir="${build_temp_src}">
+            <fileset dir="${src_path}">
+                <include name="**/*.java" />
+            </fileset>
+        </copy>
+    </target>
+
+    <!-- Copy the compiled class files along with any other
+         non-code files required for the application to the
+         binary destination directory.  We recompile from
+         the source instead of using Eclipse's compiled
+         class files as a safety precaution. If we were to
+         use the compiled class files that Eclipse produces,
+         then we would not need to copy the supplemental
+         files since that is done automatically by Eclipse.
+         Does not remove previous binary destination directory
+         beforehand. -->
+    <target name="copy_bin_with_recompile">
+
+        <!-- Compile -->
+        <mkdir dir="${build_temp_bin}"/>
+        <javac classpathref="compile.classpath" debug="true" deprecation="true" destdir="${build_temp_bin}" fork="true" memoryMaximumSize="80m" source="1.6">
+            <src path="${src_path}" />
+            <include name="**/*.java" />
+        </javac>
+
+        <!-- Copy supplemental files -->
+        <copy todir="${build_temp_bin}/blah/sampleapp/images">
+            <fileset dir="${src_path}/blah/sampleapp/images" />
+        </copy>
+    </target>
+
+    <target name="make_app_jar" depends="copy_bin_with_recompile">
+        <mkdir dir="${build_temp_deploy_app}"/>
+        <jar destfile="${build_temp_deploy_app}/${app_name_lower}.jar" basedir="${build_temp_bin}" />
+    </target>
+
+    <target name="make_app_zip" depends="copy_src" if="include.source">
+        <mkdir dir="${build_temp_deploy_src}"/>
+        <zip destfile="${build_temp_deploy_src}/${app_name_lower}_src.zip" basedir="${build_temp_src}" update="true" />
+    </target>
+
+    <!-- Create the JAR file that holds all the compiled
+         class files and supplemental files that comprise
+         the application and create a zip file containing
+         just the source code. -->
+    <target name="make_app_products" depends="make_app_jar, make_app_zip" />
+
+    <!-- Copy all the external libraries on which the
+         application depends to the final application
+         directory. -->
+    <target name="copy_external_libraries">
+        <copy todir="${build_temp_deploy_app}">
+            <fileset dir="${lib_path}"/>
+        </copy>
+        <copy todir="${build_temp_deploy_util}">
+            <fileset dir="${util_path}"/>
+        </copy>
+        <copy todir="${build_temp_deploy_util64}">
+            <fileset dir="${util64_path}"/>
+        </copy>
+    </target>
+
+    <target name="make_installer_jar" depends="make_app_products, copy_external_libraries">
+        <mkdir dir="${build_deploy}" />
+        <jar destfile="${build_deploy}/${ant.project.name}Installer.jar" basedir="${build_temp_bin}">
+            
+            <!-- Copy all class files and resources needed for the installer. -->
+            <include name="blah/sampleapp/installer/**" />
+            <include name="blah/sampleapp/images/sample.ico"/>
+            
+            <!-- If this directory contains any libraries needed by 
+                 the installer the bootstrap loader will need to 
+                 extract those libraries from within the installation 
+                 JAR and programmatically add that JAR to the class path. -->
+            <fileset dir="${build_temp_deploy}" />
+            
+            <manifest>
+                <attribute name="Main-Class" value="blah.sampleapp.installer.extractor.BootstrapLoader" />
+            </manifest>
+        </jar>
+    </target>
+
+</project>

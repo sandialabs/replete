@@ -1,0 +1,93 @@
+
+<!--
+    This project was created with this command: 
+
+        mvn archetype:generate -DgroupId=org.eclipse.m2e -DartifactId=lifecycle-mapping -Dversion=1.0.0 
+            -DarchetypeArtifactId=maven-archetype-mojo
+ 
+    This is because when trying to build all the Maven websites for the Avondale ecosystem
+    (using 'mvn site' on the command line), this error was encountered:
+    
+        ...
+        [INFO] Generating "Dependency Management" report - maven-project-info-reports-plugin:3.1.0:dependency-management
+        [INFO] Generating "About" report         - maven-project-info-reports-plugin:3.1.0:index
+        [INFO] Generating "Plugin Management" report - maven-project-info-reports-plugin:3.1.0:plugin-management
+        [INFO] Could not build project for: lifecycle-mapping:Error resolving project artifact: Failure to find org.eclipse.m2e:lifecycle-mapping:pom:1.0.0 in https://repo.maven.apache.org/maven2 was cached in the local repository, resolution will not be reattempted until the update interval of central has elapsed or updates are forced for project org.eclipse.m2e:lifecycle-mapping:pom:1.0.0
+        org.apache.maven.project.ProjectBuildingException: Error resolving project artifact: Failure to find org.eclipse.m2e:lifecycle-mapping:pom:1.0.0 in https://repo.maven.apache.org/maven2 was cached in the local repository, resolution will not be reattempted until the update interval of central has elapsed or updates are forced for project org.eclipse.m2e:lifecycle-mapping:pom:1.0.0
+            at org.apache.maven.project.DefaultProjectBuilder.build (DefaultProjectBuilder.java:330)
+            at org.apache.maven.project.DefaultProjectBuilder.build (DefaultProjectBuilder.java:299)
+        ...
+
+    The error did not seem to negatively affect website generation, but I did look into it in case I could
+    remove what looks like a rather nasty error.
+
+    These were some relevant links found during research:
+
+        https://stackoverflow.com/questions/7905501/get-rid-of-pom-not-found-warning-for-org-eclipse-m2elifecycle-mapping/8741403
+        https://stackoverflow.com/questions/7409823/m2e-lifecycle-mapping-not-found/21574285
+        
+    The profile & pluginManagement solutions didn't seem to work for me initially so I settled on the somewhat
+    more involved solution which is generating and checking in a special Maven project specific to solving this
+    Eclipse/Maven integration issue.
+    
+    Given the solution I chose, this error will still occur when building individual projects.  It is only cleaned
+    up from the big AvondaleBundler build because AvondaleBundler/pom.xml includes:
+    
+        <module>../MavenParent/lifecycle-mapping</module>
+ 
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.eclipse.m2e</groupId>
+  <artifactId>lifecycle-mapping</artifactId>
+  <packaging>maven-plugin</packaging>
+  <version>1.0.0</version>
+  <url>http://maven.apache.org</url>
+  
+  <name>Lifecycle Mapping for Eclipse</name>
+  <description>
+    This project was created only to fix an Eclipse/Maven integration issue. The issue is described
+    in more detail in this project's pom.xml file. It is not a core source code project, but rather
+    an extension of our team's configuration and usage of Maven in our software environment. If other,
+    simpler solutions are found to the Eclipse/Maven integration issue we encountered, this project 
+    can be removed.
+  </description>
+  
+    <properties>
+        <site-plugin.version>3.9.0</site-plugin.version>
+        <project-info-reports-plugin.version>3.1.0</project-info-reports-plugin.version>
+    </properties>  
+  
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>${site-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>${project-info-reports-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+  
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-plugin-api</artifactId>
+      <version>2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>

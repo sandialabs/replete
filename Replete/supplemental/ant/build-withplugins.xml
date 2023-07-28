@@ -1,0 +1,273 @@
+
+<!--
+
+    AIS Ant Build Script
+    ====================
+    
+    The main targets are:
+
+        xxx                   - xxx
+                                (xxx)
+        xxx                   - xxx
+                                (xxx)
+        xxx                   - xxx
+
+    The final output is:
+
+        build/deploy/AIS.war
+
+    Intermediate build files are stored in:
+
+        build/war/
+
+    Other important artifacts are in:
+
+        build/checkstyle/
+        build/findbugs/
+        build/javadoc/
+        build/junit/
+
+-->
+
+<project name="AIS" basedir="." default="all">
+
+
+    <!--
+        Environment Setup
+    -->
+
+    <!-- Miscellaneous -->
+    <property name="projectName" value="AIS" />
+
+    <!-- Input paths -->
+    <property name="inputSrcDir" value="${basedir}/src" />      <!-- Primary Source -->
+    <property name="inputTestDir" value="${basedir}/test" />    <!-- JUnit Tests -->
+    <property name="inputWebDir" value="${basedir}/WebContent" />
+    <property name="inputLibDir" value="${inputWebDir}/WEB-INF/lib" />
+
+    <!-- Output paths -->
+    <property name="buildDir" value="${basedir}/build" />
+    <property name="buildWarDir" value="${buildDir}/war" />
+    <property name="buildDeployDir" value="${buildDir}/deploy" />  <!-- Final build products -->
+    <property name="buildWarFile" value="${buildDeployDir}/${projectName}.war" />
+    <property name="buildClassDir" value="${buildWarDir}/WEB-INF/classes" />
+    
+    <!-- JUnit paths -->
+    <property name="buildTestDir" value="${buildDir}/junit" />
+    <property name="buildTestBinDir" value="${buildTestDir}/bin" />
+    <property name="buildTestReportsDir" value="${buildTestDir}/reports" />
+    <property name="buildTestDirMetaInf" value="${buildTestBinDir}/META-INF" />
+    
+    <!-- Javadoc paths -->
+    <property name="buildJavadocDir" value="${buildDir}/javadoc" />
+
+    <!-- External tools path -->
+    <property name="extToolsDir" value="C:/hudson-components" />
+    <property name="extToolsLibDir" value="C:/hudson-components/lib" />
+    
+    <!-- Checkstyle properties and paths -->
+    <property name="buildCheckstyleDir" value="${buildDir}/checkstyle" />
+    <property name="checkstyle.version" value="5.3" />
+    <property name="checkstyle.home" location="${extToolsDir}/checkstyle-${checkstyle.version}" />
+    <property name="checkstyle.config.file" location="${checkstyle.home}/sun_checks.xml" />
+    <property name="checkstyle.header.file" location="${tools}/checkstyle/cog.header" />
+    <property name="checkstyle.error.file" location="${buildCheckstyleDir}/checkstyle_errors.xml" />
+    <property name="checkstyle.xsl.file" location="${checkstyle.home}/contrib/checkstyle-noframes-sorted.xsl" />
+    <property name="checkstyle.report.file" location="${buildCheckstyleDir}/checkstyle_report.html" />
+    <path id="checkstyle.classpath">
+        <fileset dir="${checkstyle.home}">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+    <taskdef resource="checkstyletask.properties" classpathref="checkstyle.classpath" />
+
+    <!-- FindBugs properties and paths -->
+    <property name="buildFindBugsDir" value="${buildDir}/findbugs" />
+    <property name="findbugs.version" value="1.3.9" />
+    <property name="findbugs.home" value="${extToolsDir}/findbugs-${findbugs.version}" />
+    <property name="findbugs.error.file" location="${buildFindBugsDir}/findbugs.xml" />
+    <property name="findbugs.report.file" location="${buildFindBugsDir}/findbugs_report.html" />
+    <property name="findbugs.omitVisitors" value="CloneIdiom" />
+    <path id="findbugs.classpath">
+        <fileset dir="${findbugs.home}/lib">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+    <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpathref="findbugs.classpath" />
+
+
+    <!-- Classpath definitions -->
+    <path id="classpathInitialCompile">          <!-- To compile regular source code -->
+        <fileset dir="${inputLibDir}">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+    <path id="classpathNormalCompile">           <!-- To compile JUnit source code -->
+        <path refid="classpathInitialCompile"/> 
+        <pathelement path="${buildClassDir}" />
+    </path>
+    <path id="classpathJUnitRun">                <!-- To run JUnit tests -->
+        <path refid="classpathNormalCompile"/> 
+        <pathelement path="${buildTestBinDir}" />
+    </path>
+
+
+    <!--
+        External Targets
+    --> 
+    
+    <target name="all" description="Performs a full build of the AIS system." 
+        depends="build-war, run-junit, run-javadoc, run-checkstyle, run-findbugs"/>
+
+    <!-- Complete removal of all generated build files. -->
+    <target name="clean" description="Removes the build directory completely.">
+        <delete dir="${buildDir}" />
+    </target>
+
+
+    <!--
+        Internal Targets
+    -->
+
+    <!-- Build Java source and put it in the classes directory of the WEB-INF-->    
+    <target name="build-war">
+
+        <!-- Compile all Java source files and place them into the classes dir -->
+        <mkdir dir="${buildClassDir}" />  
+        <javac srcdir="${inputSrcDir}" destdir="${buildClassDir}" classpathref="classpathInitialCompile" 
+            deprecation="on" />
+        
+        <!-- Copy all non-Java resources to the output directory -->
+        <!-- For example, email templates and log4j.properties -->
+        <copy todir="${buildClassDir}">
+            <fileset dir="${inputSrcDir}" excludes="**/*.java"/>   <!-- .svn dirs excluded by default -->  
+        </copy>
+
+        <!-- Copy over the WebContent dir -->
+        <copy todir="${buildWarDir}">
+            <fileset dir="${inputWebDir}" />  <!-- .svn dirs excluded by default -->
+        </copy> 
+    
+        <!-- Create the WAR file -->
+        <mkdir dir="${buildDeployDir}"/>
+        <jar jarfile="${buildWarFile}" basedir="${buildWarDir}"/>
+    
+    </target>
+
+    
+    <!-- JUnit -->
+    <target name="run-junit" depends="build-war">        
+
+        <mkdir dir="${buildTestBinDir}" />
+        <mkdir dir="${buildTestReportsDir}" />
+           <mkdir dir="${buildTestDirMetaInf}" />
+            <copy todir="${buildTestDirMetaInf}">        
+                <fileset dir="${inputTestDir}/META-INF">   <!-- Copy over all the xml config files -->  
+            <exclude name="persistence.xml"/>
+            <exclude name="orm.xml"/>
+            </fileset>
+            </copy>        
+        
+        <!-- Build all the test classes and put them in the test class dir -->
+        <javac srcdir="${inputTestDir}" destdir="${buildTestBinDir}" classpathref="classpathNormalCompile" 
+            deprecation="on" />
+
+        <junit printsummary="true" haltonfailure="false" fork="true">
+            <classpath refid="classpathJUnitRun" />
+            <jvmarg value="-javaagent:${inputLibDir}/org.springframework.instrument-3.0.2.RELEASE.jar"/>
+
+            <!-- Using a single Ant test task on a root test suite that
+                 calls all the other test suites and test cases works but
+                 you don't get a per-package breakdown of the tests in the
+                 final report.  That is why the batchtest task must be 
+                 used instead.                  
+            <property name="testRoot" value="gov.sandia.ais.AllTests" />
+            <test name="${testRoot}" fork="yes" todir="${buildTestReportsDir}" haltonfailure="false">
+                <formatter type="xml" usefile="true"/>
+                <formatter type="plain" usefile="false"/>
+            </test>
+            -->
+
+            <batchtest fork="yes" todir="${buildTestReportsDir}">
+                <fileset dir="${buildTestBinDir}">
+                    <exclude name="gov/sandia/ais/model/**/*.class"/>
+                    <!--exclude name="gov/sandia/ais/data/gen/**/*.class"/-->
+                    <exclude name="gov/sandia/ais/util/**/*.class"/>
+                    <include name="**/*Test.class" />
+                </fileset>
+                <formatter type="xml" usefile="true"/>
+                <!--formatter type="plain" usefile="false"/-->  <!-- For complete details to console -->
+            </batchtest>
+
+        </junit>
+
+        <!-- Generate the combined report from all the individual
+             JUnit test reports. -->
+        <junitreport todir="${buildTestReportsDir}">
+            <fileset dir="${buildTestReportsDir}">
+                <include name="TEST-*.xml" />
+            </fileset>
+            <report format="frames" todir="${buildTestReportsDir}/html" />
+        </junitreport>
+    </target>
+
+    
+    <!-- JavaDoc -->
+    <target name="run-javadoc">
+        <mkdir dir="${buildJavadocDir}"/>
+        <javadoc sourcepath="${inputSrcDir}" destdir="${buildJavadocDir}" classpathref="classpathNormalCompile" 
+               author="true" maxmemory="512m" version="true" source="1.5" use="true" useexternalfile="true" 
+               windowtitle="${projectName}">
+            
+            <!-- Proxy information so Ant can fetch the package list 
+                 at the link URL. -->
+            <arg value="-J-Dhttp.proxyHost=proxy.sandia.gov"/>
+            <arg value="-J-Dhttp.proxyPort=80"/>
+            
+            <doctitle>${projectName}</doctitle>
+            <link href="http://download.oracle.com/javase/6/docs/api/"/>
+        </javadoc>
+    </target>
+
+
+    <!-- Checkstyle -->
+    <target name="run-checkstyle">
+
+        <mkdir dir="${buildCheckstyleDir}" />
+
+        <checkstyle config="${checkstyle.config.file}" failOnViolation="false">
+            <fileset dir="${inputSrcDir}">
+                <include name="**/*.java" />
+            </fileset>
+            <formatter type="xml" toFile="${checkstyle.error.file}" />
+        </checkstyle>
+
+        <xslt in="${checkstyle.error.file}" out="${checkstyle.report.file}" style="${checkstyle.xsl.file}" />
+
+    </target>
+    
+
+    <!-- Findbugs -->
+    <target name="run-findbugs">
+
+        <mkdir dir="${buildFindBugsDir}" />
+
+        <findbugs home="${findbugs.home}" output="xml" outputFile="${findbugs.error.file}" jvmargs="-ms32m -mx512m" omitVisitors="${findbugs.omitVisitors}">
+            <auxClasspath>
+                <path refid="classpathInitialCompile" />
+            </auxClasspath>
+            <sourcePath path="${inputSrcDir}" />
+            <class location="${buildClassDir}" />
+        </findbugs>
+
+        <findbugs home="${findbugs.home}" output="html" outputFile="${findbugs.report.file}" jvmargs="-ms32m -mx512m" omitVisitors="${findbugs.omitVisitors}">
+            <auxClasspath>
+                <path refid="classpathInitialCompile" />
+            </auxClasspath>
+            <sourcePath path="${inputSrcDir}" />
+            <class location="${buildClassDir}" />
+        </findbugs>
+
+    </target>
+
+</project>

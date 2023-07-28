@@ -1,0 +1,39 @@
+[->] H/
+[==] Samedir/: SAME
+    [==] B/: SAME
+        [==] c.txt: SAME
+    [==] b.txt: SAME
+[==] aaa.txt: SAME
+[~~] case-diff-byte-diff.txt vs. Case-Diff-byte-diff.txt: (Path Case: Differs) (MD5: 714d32d45f6cb3bc336a765119cb3c4c != 793b899a4f8fdf8109b9b0e71aa0f28e)
+    Different at position 0
+    (expected = QQQ)
+    (actual   = WWW)
+[~~] case-diff.txt vs. Case-Diff.txt: (Path Case: Differs) SAME
+[<-] d1dironly/
+[<-] d1only.txt
+[->] d2dironly/
+[->] d2only.txt
+[~~] diffdir/: 2 Differences (4 Total)
+    [~~] B/: 3 Differences (3 Total)
+        [==] ccc.txt: SAME
+        [<-] d1only/
+        [->] d2only/
+        [~~] ddd-diff.txt: (MD5: 45054f47ac3305a2a33e9bcceadff712 != 77963b7a931377ad4ab5ad6a9cd718aa)
+            Different at position 0
+            (expected = DDD)
+            (actual   = ddd)
+    [~~] b.txt: (Size: 3 B != 5 B)
+        Actual Has 2 Additional Characters: 11
+[~~] diffsize.txt: (Size: 12 B != 5 B)
+    Expected Has 7 Additional Characters: [CR][NL]12345
+[==] emptydir/: SAME
+[->] emptyfile.txt
+[~~] filefolder/ vs. filefolder: (Path Type: Left is Dir but Right is File)
+[~~] same-size-diff-md5.txt: (MD5: 594f803b380a41396ed63dca39503542 != a21075a36eeddd084e17611a238c7101)
+    Different at position 0
+    (expected = aaaaa)
+    (actual   = bbbbb)
+[~~] samedir-casediff/ vs. samedir-CaseDiff/: (Path Case: Differs) SAME
+    [==] B/: SAME
+        [==] c.txt: SAME
+    [==] b.txt: SAME

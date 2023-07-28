@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>gov.sandia.avteam.maven</groupId>
+        <artifactId>maven-normal-parent</artifactId>
+        <version>2-SNAPSHOT</version>
+    </parent>
+
+    <groupId>gov.sandia.avteam.replete</groupId>
+    <artifactId>replete</artifactId>
+    <version>2.0.0-SNAPSHOT</version>
+
+    <packaging>jar</packaging>
+
+    <name>Replete</name>
+    <description>
+        This project contains a wide array of useful utilities including, but not limited to,
+        command-line argument parsing, collections, deadlock detection, object diffing,
+        object equality, exception handling, I/O, logging, email, multithreading, numeric analysis,
+        parameters, a plug-in framework, external process management, progress monitoring, reflection,
+        software versioning, sorting, SSH, custom Swing controls and windows, simplistic UI creation
+        framework, UI validation framework, and text pattern matching. The project's intent is similar
+        to that of Apache Commons, though the overlap between this project and either Apache Commons or
+        other publically available libraries is unknown.
+    </description>
+
+    <dependencies>
+
+        <!-- JUnit's version is managed by the parent POM -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.6</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/javax.mail/mail
+             Current version: 1.4.7
+             Moved to javax.mail:javax.mail-api @ 1.6.2 -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.3</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.jfree/jcommon
+             Current version: 1.0.24 -->
+        <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>jcommon</artifactId>
+            <version>1.0.17</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.codehaus.jettison/jettison
+             Current version: 1.4.1 -->
+        <dependency>
+            <groupId>org.codehaus.jettison</groupId>
+            <artifactId>jettison</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.jfree/jfreechart -->
+        <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>1.5.2</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.jcraft/jsch -->
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.1.55</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/log4j/log4j
+             This library has been moved to org.apache.logging.log4j:log4j-core
+             and has versions as large as 2.13.3 -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/net.sf.opencsv/opencsv
+             This library has moved to com.opencsv:opencsv and has
+             versions as large as 5.2 -->
+        <dependency>
+            <groupId>net.sf.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>2.3</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.thoughtworks.xstream/xstream -->
+        <!-- XStream has a huge number of optional dependencies, but this will only
+             bring in xmlpull & xpp3_min. -->
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.4.17</version>
+        </dependency>
+
+        <!-- Avondale Team Project Dependencies -->
+        <dependency>
+            <groupId>gov.sandia.avteam.replete</groupId>
+            <artifactId>replete-externals</artifactId>
+            <version>0.1.0-SNAPSHOT</version>
+        </dependency>
+
+    </dependencies>
+
+</project>

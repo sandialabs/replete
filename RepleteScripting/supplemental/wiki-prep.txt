@@ -1,0 +1,231 @@
+https://www.youtube.com/watch?v=9V4GzEomc5w
+
+RScript
+
+1. Introduction
+  a. History
+  b. Purpose
+  c. Uses
+    Clean, compact and familiar way
+
+2. RScript Language
+  a. Overview
+    context less - 
+    generic programming language
+    3 + 4 could result in a value 7, 0.75, -1, "dog eats cake", or null (but at the same time connect to a web server and download a funny movie) depending on what behavior has been assigned to the + operator at the moment of script evaluation.  Also, the idea of LValue has been removed from the parser and instead pushed to user-level validation and evaluation.
+    "3 = x" is a valid statement as far as the parsing goes, because RScript does not want to ASSUME the use case for which the developer is using that string.
+    Strike a balance between providing operators at conventional precedence levels and associativity without requiring or providing the MEANING of those operators.
+    This also means that the RScript language itself does not distinguish between the arithmetic addition operator (+) and the string concatenation operator (+).  Luckily both of these exist at the same precedence level in all programming languages.  However, what the + actually *does* when it is executed on its two inputs is configurable in the evaluator.
+    SAD NOTE: Perl uses the dot (.) for string concatenation
+    
+    implicit multiplication
+  
+  b. Precedence
+  
+    I. Introduction
+        Although operator and function behavior is all configurable by the developer (or even dynamically via plug-in extensions), the one thing that is effectively impossible or at least impractical to change in any given programming language is the PRECEDENCE of the operators.  Luckily both mathematics and programming languages have established a fairly consistent set of rules for the relative precedence of common operators by this point which are known to all programmers.
+        
+        It is worth mentioning that from a programming language standpoint, ALL operators are actually superfluous, as they merely embody in one symbol (or a few joint symbols) a process to execute on one or more inputs.  This is the same as a function.  To illustrate this, consider this expression:
+        
+            x += a / b * (c[4] + sin(y.name))
+           
+        Although it is extremely convenient to allow the programmer to write the above, it actually could also be written the following manner while expressing identical intent:
+        
+            addAndAssign('x', mult(div(a, b), add(fetchElement(c, 4), sin(fetchMember(y, 'name')))))
+            
+        One advantage to an operator-less programming language is, there is no need for operator precedence at all.  The only global precedence rule is that any given function cannot be invoked until all of its inputs have been fully resolved to known values and then the matching pairs of parentheses handle all the rest.
+        
+        However, that is probably the only advantage of an operator-less programming language.  Operators and their associated, well-defined, well-known precedence rules enable a much more clear and expressive programming language.
+        
+    II. Operand Values
+    
+        Constants
+          Boolean: true, false
+          Null: null
+          Number:
+            Integer: -12, 0, +5, 12343
+            Floating-Point, -123.43, 0.0100014, +2.3341e2
+            (negative numbers enabled by the unary minus operator)
+          String: ""
+        Variable: a, numStudents
+        Member Access: a.b, a.f(), a.list[2]
+          (enabled by the dot operator)
+        Index Access: x[3]
+          (enabled by the element access operator)
+        Function Calls: cos(x)
+        List: [], [a, b, c, d]
+        Map: [:], [k: v, k: v]
+        (<Statement>)
+       
+        List / Array / Matrix Notes:
+        There are many ways to express lists/arrays/matrices in various programming languages.
+        Matlab uses [1, 2, 3] and [1, 2; 3, 4] (among other constructs).  Java uses {} as in {1, 2, 3} and {{1,2}, {3,4}}.
+        RScript uses Groovy's notation to seamlessly express both lists and matrices in one.  There is no way to express
+        "arrays" in the Java sense.  All lists become ArrayLists.  The syntax is [a, b, c] for lists (ArrayList), and
+        [k: v, k: v, k: v] for maps (LinkedHashMap).
+    
+    II. Levels & Associativity
+
+        (Highest)
+        . [] ()              L -> R (member/element access & parentheses)
+        {}                   N/A    (units specification)
+        **                   R -> L (exponentiation)
+        + - ! ~              R -> L (unary)
+        * / %                L -> R (multiplicative)
+        + -                  L -> R (additive)
+        < <= > >=            L -> R (relational)
+        == !=                L -> R (equality)
+        &&                   L -> R (conditional and)
+        ||                   L -> R (conditional or)
+        = += -= *= /= %= **= R -> L (assignment)
+        (Lowest)
+        
+        Structural Operators: = += -= *= /= %= **= || && == != < <= > >= + - * / + - ! ~ ** {}
+        Value Operators:      . [] ()
+
+        Exponentiation Operator Notes
+        The exponentiation operator has not always been included in all programming languages.  If it's not in a given language,
+        some math library provides an equivalent function (e.g. "pow").  Most programming languages that do provide the operator
+        use two asterisks (**) but some, including Matlab, use the slightly more "logical" caret operator (^).  The reason that
+        programming languages have not used ^ for exponentiation is that this operator was already previously assigned meanings
+        like logical or bitwise exclusive or (XOR).  Besides the obvious ambiguity using it for exponentiation would create, this
+        XOR operator has always had a much lower precedence level than what exponentiation required.  However, the format of a
+        "units label" still uses ^ for exponentiation because that is a ton more readable and understandable by even non-programmers
+        (e.g. "{m^3}", "{m/s^2}").  Another interesting thing about exponentiation is that by convention it has right-to-left
+        associativity.  Thus, a ^ b ^ c is interpreted identical to a ^ (b ^ c).
+
+  c. BNF
+    https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form
+    
+  d. What it doesn't have!
+    
+    Pre/Post Increment/Decrement: ++ --
+    Logical:     ^
+    Bitwise:     & | ^
+    Shift:       << >> >>> 
+    Assignment:  &= |= ^= <<= >>= >>>=
+    Ternary      ? :
+    Elvis:       ?: (Groovy)
+    Spaceship:   <=> (Groovy, Perl)
+    Safe Nav:    ?. (Groovy)
+    Spread:      *. (Groovy)
+    Range:       .. ..< (Groovy, Perl)
+    Other equality operators: like identical equality (===, !===), wild card equals, loose wild card equals...
+    Regex Related: =~ ==~ !~ (Groovy, Perl) (e.g. "aaa" =~ /a.*/)
+    Smartmatch:   ~~ (Perl)
+    Miscellaneous: instanceof, in, as, new
+    Casting:     (Long) (WebCrawlerParams)
+    
+    *Control Statements: if, for, while, do/while, break, continue
+    *Ability to define blocks of statements (e.g. { ... })
+    *Multi-line Functions: e.g. cos(x) = {x += 2; x /= 5; return x - 10;}
+    **Built-in functions: rand(), pow(), cos(), currentTimeMillis(), printf()
+
+    NOTE: Because RScript doesn't yet have ++ or --, you don't need parentheses to surround consecutive + or - unary operators
+    as in x = +++++3 or v = ---x Each operator is applied in order from right-to-left.  When implemented, you'll need parentheses
+    in cases like these: +(+4) to indicate 4, -(-(-5)) to indicate -5.
+
+    NOTE: Because RScript doesn't yet have << or >>, these cannot yet be used in other commonly used contexts such as C++'s insertion
+    or extraction operators (cout << 'Hi'; cin >> input;) or Groovy's append-to-list operator (names << "JohnnyNumber5").
+    
+    *RScript is not a full-fledged programming language!  We hope to develop components to easily integrate Python or Groovy scripting
+    into our applications in the future to provide the functionality that RScript does not provide.  However, a block of RScript
+    statements (referred to as a script or an RScript), is itself a multi-line function.  At the end of evaluating a block of statements,
+    all variables, function definitions, etc. that have been assigned a value can be accessed.
+    
+    **RScript is not a full fledged programming language!  However, the RScriptEvaluator can be easily configured with some default functionality
+    (e.g. basic math) to prevent developers from having to configure basic operator and function behavior upon every use.
+    
+    Arbitrary LValues yet - right now LValues can't be top-level constants is all.  Possible LValue expressions: variables, function definitions,
+    member-access constructs and indexing constructs.  To illustrate this, here are examples of acceptable LValues:
+    
+       x = 10;
+       cos(x) = 10;
+       x.y = 10;
+       x[3] = 10;
+       
+    Although this is pretty standard for any programming language, there was a lot of thought put into whether there should be ANY LValue restrictions with regards to the RScript language.  The thought was that it's goal should be to let people easily construct, navigate, and evaluate abstract syntax trees and assume as little as possible about what those people's specific use cases.  In other words, if "3 = x" would means something in someone's use case, then why should RScript disallow it?  Alas, that change hasn't happened yet, and LValue rules are in effect.
+
+3. Using
+  a. Project
+  
+  You can use RScript simply by checking out the RepleteScripting Eclipse project from the Replete SVN repo, adding it to your Build Path, and then exercising the simple API show demonstrated below.
+  
+  b. API
+  
+  Very simple usage...
+  
+  Parsing
+  {{{
+  String source = "total = 5 * (base + base * tax)";     // Single statement in script
+  RScriptParser parser = new RScriptParser();
+  //parser.setXYZ(...);   // Space for future configurability
+  try {
+      RScript script = parser.parse(source);
+      ...
+  } catch(ParseException e) {
+      e.printStackTrace();
+  }
+  }}}
+  
+  Rendering - rendering converts a parsed RScript (AST) into a normalized, well-formatted string.  Useful for quickly evaluating or debugging a parse.
+  {{{
+  RScript script = " x  = (y ) + 3 * 4";  // 1 set of completely unnecessary parentheses, extra spaces
+  RScriptRenderer renderer = new RScriptRenderer();
+  renderer.setRenderer(ASTVariable.class, (node, context) -> {
+      String prefix = "scope_";
+      context.append(prefix);             // Configure a custom renderer for variables
+      context.appendDefault(node);        // Ensures this custom renderer doesn't get recursively called
+  });
+  String imageShort = renderer.renderShort(script);  // Does not output superfluous parentheses
+  // ^Results in: "scope_x = scope_y + 3 * 4"
+  String imageLong = renderer.renderLong(script);    // Does not suppress superfluous parentheses
+  // ^Results in: "scope_x = (scope_y + (3 * 4))"
+  }}}
+  
+  Inspection - inspection allows the developer to find learn useful things about the AST.
+  
+  {{{
+  RScript script = ...;
+  RScriptInspector inspector = new RScriptInspector();
+  Set<String> allSymbols = inspector.getSymbols(script, SymbolType.VARIABLE);   // All variables in the script
+  Set<String> stmtSymbols = inspector.getSymbols(script.getStatements()[0], SymbolType.FUNCTION);   // All functions in the first statement only
+  String varAssign = inspector.getVariableName(script.getStatements()[0], true, true, true, true);  // LValue assignment variable ("x" in "x = 3")
+  }}}
+
+  Evaluation
+  {{{
+  try {
+      String source = "x = 3; z = 7 + (x += y = 1)";  // Multiple statements in one script, executed in order.
+      RScriptParser parser = new RScriptParser();
+      RScript script = parser.parse(source);
+      RScriptEvaluator evaluator = new RScriptEvaluator();
+      evaluator.setInitialEnvironment(
+          new EvaluationEnvironment()
+              .addLayer(person)
+      );
+      EvaluationResult result = evaluator.evaluate(script);
+      System.out.println(result);
+      // ^Shows: {x=4.0, y=1, z=11.0, $root=11.0}
+      // $root represents the very last value returned from the last statement in a script.
+      // It's also the only way to access the result value in an assignment-less script, as in: "100 / 4",
+      // which would yield a result map of just one variable/value: {$root=25.0}.
+  } catch(ParseException e) {
+      e.printStackTrace();
+  } catch(EvaluationException e) {
+      e.printStackTrace();
+  }
+  }}}
+
+4. References
+
+  http://docs.groovy-lang.org/latest/html/documentation/
+  https://github.com/rwaldron/exponentiation-operator
+  http://introcs.cs.princeton.edu/java/11precedence/
+  https://en.wikipedia.org/wiki/Operator_associativity
+  http://math.stackexchange.com/questions/1633790/what-is-the-order-when-doing-xyz-and-why
+  http://www.engr.mun.ca/~theo/Misc/exp_parsing.htm#classic
+  http://stackoverflow.com/questions/28525998/precedence-and-associativity-grammar-mistake-using-javacc
+  http://stackoverflow.com/questions/26693539/javacc-apply-lookahead-number-to-all-choices-in-a-single-choice-list
+  http://ramkulkarni.com/blog/handling-some-of-the-warnings-and-errors-generated-by-javacc/
+  

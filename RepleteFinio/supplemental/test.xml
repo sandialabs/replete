@@ -1,0 +1,16 @@
+<doc>
+    <car make="ford" model="f150">
+        <wheel name="lf">
+            <nut>5</nut>
+        </wheel>
+        <wheel name="rf">
+            <nut>6</nut>
+        </wheel>
+        <wheel name="lr">
+            <nut>7</nut>
+        </wheel>
+        <wheel name="rr">
+            <nut>8</nut>
+        </wheel>
+    </car>
+</doc>

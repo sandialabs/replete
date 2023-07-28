@@ -1,0 +1,19 @@
+File I/O
+
+Path
+  >File<
+  Directory
+
+Write as text
+Read as text
+Write as binary
+Read as binary
+RANDOM ACCESS
+
+Binary
+  InputStream
+  OutputStream
+
+Text
+  Reader
+  Writer

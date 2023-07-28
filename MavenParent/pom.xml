@@ -1,0 +1,863 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>gov.sandia.avteam.maven</groupId>
+    <artifactId>maven-parent</artifactId>
+    <version>2-SNAPSHOT</version>
+
+    <packaging>pom</packaging>
+
+    <name>Maven Parent</name>
+    <description>
+        This project houses the parent POM for all Maven POM files in the Avondale software
+        ecosystem. An explicit attempt was made to consider how we can make the building of
+        projects with Maven powerful, consistent, and maintainable. We want all projects to
+        have useful features configured and activated when they are built with Maven.  We
+        don't want a prevalence of projects with unique POM files because this causes
+        confusion and is a maintainability issue. The elements obviously unique to each
+        project should be the group ID, artifact ID, version, name, desription, and
+        the dependencies.
+    </description>
+
+    <organization>
+        <name>Sandia National Labs</name>
+        <url>http://sandia.gov</url>
+    </organization>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!-- All "avteam" projects are using Java 8 right now -->
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
+        <!--
+            These plug-in version numbers are specified here for
+            visibility and ease of modification.
+
+            These are the plug-ins we are currently using, though there
+            are many more plug-ins commonly used along with Maven.
+        -->
+        <clean-plugin.version>3.1.0</clean-plugin.version>
+        <resources-plugin.version>3.1.0</resources-plugin.version>
+        <compiler-plugin.version>3.8.1</compiler-plugin.version>
+        <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>                <!-- See comment on Surefire plug-in versions below -->
+        <surefire-report-plugin.version>3.0.0-M5</surefire-report-plugin.version>  <!-- See comment on Surefire plug-in versions below -->
+        <jar-plugin.version>3.2.0</jar-plugin.version>
+        <assembly-plugin.version>3.3.0</assembly-plugin.version>
+        <install-plugin.version>3.0.0-M1</install-plugin.version>
+        <deploy-plugin.version>3.0.0-M1</deploy-plugin.version>
+        <dependency-plugin.version>3.1.2</dependency-plugin.version>
+        <site-plugin.version>3.9.0</site-plugin.version>
+        <project-info-reports-plugin.version>3.1.0</project-info-reports-plugin.version>
+        <enforcer-plugin.version>3.0.0-M3</enforcer-plugin.version>
+        <versions-plugin.version>2.7</versions-plugin.version>
+        <help-plugin.version>3.2.0</help-plugin.version>
+        <jdepend-maven-plugin.version>2.0</jdepend-maven-plugin.version>
+        <dep-check.version>5.3.2</dep-check.version>
+        <build-helper-plugin.version>3.2.0</build-helper-plugin.version>
+        <checksum-maven-plugin.version>1.9</checksum-maven-plugin.version>
+        <spotbugs-maven-plugin.version>4.0.4</spotbugs-maven-plugin.version>
+        <antrun-maven-plugin.version>3.0.0</antrun-maven-plugin.version>
+        <war-plugin.version>3.2.3</war-plugin.version>
+        <source-plugin.version>3.2.1</source-plugin.version>
+        <plugin-plugin.version>3.6.1</plugin-plugin.version>
+        <license-plugin.version>2.0.0</license-plugin.version>
+
+        <!-- Other plug-ins we might use one day
+        <failsafe-plugin.version>3.0.0-M3</failsafe-plugin.version>    Integration testing plug-in
+        <verifier-plugin.version>1.1</verifier-plugin.version>
+        <javadoc-plugin.version>3.1.1</javadoc-plugin.version>
+        -->
+
+        <maven-minimum.version>3.0.5</maven-minimum.version>
+
+        <!-- Managed dependency versions -->
+        <junit.version>4.13</junit.version>
+        
+        <!-- 
+            Surefire Plug-in Versions:
+            
+                Some projects are getting additional configuration if they are dependencies
+                of a web app project.  Namely, they are having additional validation turned
+                on (via .project entries).  This additional validation, at one point, started
+                showing a lot of XML validation errors on JUnit XML reports.  I tracked down
+                what I thought was the cause, a check-in into the project that has the common
+                code between both maven-surefire-plugin & maven-surefire-report-plugin:
+                
+                https://www.mail-archive.com/issues@maven.apache.org/msg181975.html
+                https://github.com/apache/maven-surefire/commit/edb3b71b95db98eef6a8e4fa98d376fd3512b05a#diff-c634b539151b4b76bde50d93d5a6cd2b0f51aa411281398cc295cc721bdfa1d5
+                
+                Someone had added a version attribute to the testsuite element, which was not
+                valid by the XSD, referenced in the very same commit.
+                
+                So I decided to try 3.0.0-M1 before this was commited, going back in time a bit,
+                but that probably wouldn't be a problem.  However, I tested 3.0.0-M5 for both
+                plug-ins and was just left confused.  The bug was still in there, but Eclipse
+                was no longer complaining about the validation errors.
+                
+                Thus this is an outstanding issue, but we're going to run with 3.0.0-M5 until 
+                I notice other developers having an issue in their workspaces.
+         -->
+    </properties>
+
+    <!-- repositories>   Not sure I'm ready to do this yet.
+        <repository>
+            <id>sandia-nexus</id>
+            <name>Sandia Nexus Proxy</name>
+            <url>https://nexus.web.sandia.gov/repository/maven-public/</url>
+        </repository>
+    </repositories -->
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    
+    <dependencies>
+        <dependency>
+            <groupId>com.google.errorprone</groupId>
+            <artifactId>error_prone_annotations</artifactId>
+            <version>2.5.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>30.1.1-jre</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.15</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.8.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna</artifactId>
+            <version>5.8.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>1.20</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.checkerframework</groupId>
+            <artifactId>checker-qual</artifactId>
+            <version>3.8.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.13.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.30</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+
+        <!-- For resources we want JUST the 'software.version' file
+             to be 'filtered' which actually means to be subject to
+             variable replacement as it is copied from the source
+             directory to the output (compiled) directory.  -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/software.version</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>**/software.version</exclude>
+                </excludes>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+
+        <!--
+            This parent POM explicitly locks in which versions of the Maven
+            plug-ins will be used by child POMs in order to maintain consistent
+            behavior.  If any plug-in's version is left unspecified by a
+            child POM then which version Maven chooses is somewhat undefined.
+        -->
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${clean-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${resources-plugin.version}</version>
+                    <configuration>
+
+                        <!-- By default the resources plug-in doesn't copy empty
+                             directories.  However, some projects actually use
+                             empty directories in their testing and in general
+                             empty directories don't do any harm.  It's really
+                             up to the development team to be reviewing all their
+                             directory structures, both source and resources, for
+                             superfluous directories.  It is assumed if empty
+                             directories are in the source, they are there for a
+                             reason. -->
+                        <includeEmptyDirs>true</includeEmptyDirs>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${compiler-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>            <!-- Unit testing plug-in -->
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${surefire-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${jar-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>${assembly-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>${install-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${deploy-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${dependency-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>${site-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>${project-info-reports-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>${enforcer-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>versions-maven-plugin</artifactId>
+                    <version>${versions-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-report-plugin</artifactId>
+                    <version>${surefire-report-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-help-plugin</artifactId>
+                    <version>${help-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>jdepend-maven-plugin</artifactId>
+                    <version>${jdepend-maven-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.owasp</groupId>
+                    <artifactId>dependency-check-maven</artifactId>
+                    <version>${dep-check.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>${build-helper-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>net.nicoulaj.maven.plugins</groupId>
+                    <artifactId>checksum-maven-plugin</artifactId>
+                    <version>${checksum-maven-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.github.spotbugs</groupId>                 <!-- https://spotbugs.readthedocs.io/en/stable/bugDescriptions.html -->
+                    <artifactId>spotbugs-maven-plugin</artifactId>
+                    <version>${spotbugs-maven-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>${antrun-maven-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>${war-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${source-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-plugin-plugin</artifactId>
+                    <version>${plugin-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>license-maven-plugin</artifactId>
+                    <version>${license-plugin.version}</version>
+                </plugin>
+
+                <!-- This plug-in is strictly for Eclipse integration.  It is necessary to remove some errors
+                     that appear in the pom.xml files when we include a plug-in execution for
+                         org.apache.maven.plugins:maven-install-plugin:install-file and
+                         org.apache.maven.plugins:maven-dependency-plugin:build-classpath
+                     The error is something akin to "plugin execution not covered by lifecycle configuration".
+                     Essentially Eclipse is confused on how to execute this goal itself, so the following
+                     instructions tell it how to treat that plug-in.  This is not an issue on the command-line
+                     and including this does not negatively affect command-line usage.
+                         https://stackoverflow.com/questions/6352208/how-to-solve-plugin-execution-not-covered-by-lifecycle-configuration-for-sprin
+                         https://www.eclipse.org/m2e/documentation/m2e-execution-not-covered.html
+                -->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.apache.maven.plugins</groupId>
+                                        <artifactId>maven-install-plugin</artifactId>
+                                        <versionRange>[1.0.0,)</versionRange>
+                                        <goals>
+                                            <goal>install-file</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <execute>
+                                            <runOnIncremental>true</runOnIncremental>
+                                        </execute>
+                                    </action>
+                                </pluginExecution>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.apache.maven.plugins</groupId>
+                                        <artifactId>maven-dependency-plugin</artifactId>
+                                        <versionRange>[1.0.0,)</versionRange>
+                                        <goals>
+                                            <goal>build-classpath</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <execute>
+                                            <runOnIncremental>true</runOnIncremental>
+                                        </execute>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <warSourceDirectory>web-app</warSourceDirectory>  <!-- This isn't the Maven plug-in's standard location -->
+                </configuration>                                      <!-- This was the location of Eclipse's generated J2EE app -->
+            </plugin>                                                 <!-- So we're sticking with it for now to minimize disruption -->
+
+            <!-- Unit Tests: This <plugin> descriptor below is located
+                 here to show what some common options are that could
+                 be used to configure this unit test plug-in.
+                 
+                 Currently it is completely commented out.  This doesn't
+                 mean unit tests won't be firing, since running unit tests
+                 happens by default.  The descriptor below simply allows
+                 one to configure that behavior.  Sometimes it is useful
+                 to temporarily skip all unit tests, for example.
+            
+                 Uncomment the pieces below to configure this plug-in.
+             -->
+            <!--
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+            -->
+                    <!-- skipTests>true</skipTests -->
+                    <!-- <testFailureIgnore>true</testFailureIgnore> -->  <!-- Can be used to see all failed tests across all projects before fixing them -->
+                    <!-- <argLine>-Xmx512m</argLine> This can be added to subprojects if they need more memory -->
+            <!--
+                </configuration>
+            </plugin>
+            -->
+
+            <!-- Every project should have a consistent way to produce
+                 timestamps/build-IDs. The ${maven.build.timestamp} property
+                 doesn't respect ${maven.build.timestamp.format} when placed
+                 directly into filtered files, so this plug-in is here to
+                 fix that problem.  Additionally, we don't use a <timestamp>
+                 property in the <properties> section because that doesn't
+                 get updated on each build, but rather only when the POM
+                 itself is updated.
+
+                 IMPORTANT: The product.version.full property is used in
+                 the source code in the software.version files filtered
+                 during the build process and read by the SoftwareVersion
+                 classes at runtime.
+            -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                
+                    <!-- This execution makes sure only the source in src/main/java
+                         is considered for the main compilation so that source 
+                         folders like src/experimental/java and src/examples/java
+                         are ignored and not used for compilation. -->
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.sourceDirectory}</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>timestamp-property</id>
+                        <goals>
+                            <goal>timestamp-property</goal>  <!-- Goal tied to Validate phase -->
+                        </goals>
+                        <configuration>
+                            <name>product.build.timestamp</name>
+                            <pattern>'b'yyyyMMdd-HHmm</pattern>
+                            <timeZone>GMT-6</timeZone>
+                            <locale>en_US</locale>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>full-version-property</id>
+                        <goals>
+                            <goal>timestamp-property</goal>
+                        </goals>
+                        <configuration>
+                            <name>product.version.full</name>
+                            <!-- pattern>'3.5.0.b20200722-2103'</pattern can add this for easier diffing-->
+                            <pattern>'${project.version}'.'b'yyyyMMdd-HHmm</pattern>
+                            <timeZone>GMT-6</timeZone>
+                            <locale>en_US</locale>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- How to get this inherited into children but
+                 not activated during parent install?
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>package-dep-dir</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <descriptors>
+                              <descriptor>../MavenParent/assembly-dep-dir.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            -->
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>comprehensive</id>
+            
+            <build>
+                <plugins>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>enforce-pre-checks</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <phase>validate</phase>   <!-- default phase -->
+                                <configuration>
+                                    <fail>false</fail>    <!-- Currently just in understand/investigate/highlight mode - don't want to fail the build -->
+                                    <skip>false</skip>
+        
+                                    <rules>
+                                        <requireJavaVersion>
+                                            <version>1.8</version>
+                                        </requireJavaVersion>
+        
+                                        <!-- This rule is needed for the versions plug-in
+                                             when you perform: mvn versions:display-plugin-updates
+                                             https://maven.apache.org/enforcer/enforcer-rules/requireMavenVersion.html -->
+                                        <requireMavenVersion>
+                                            <version>${maven-minimum.version}</version>
+                                        </requireMavenVersion>
+        
+                                        <banDuplicatePomDependencyVersions />
+                                        <dependencyConvergence />
+        
+                                        <!-- <banDuplicateClasses> This used to be a thing in a previous enforcer version... would have been useful -->
+        
+                                    </rules>
+                                </configuration>
+                            </execution>
+                            <!--  execution>
+                                <id>enforcer-post-checks</id>   You can check things
+                                <goals>                         after the build too
+                                    <goal>enforce</goal>
+                                </goals>
+                                <phase>verify</phase>
+                                <configuration>
+                                    <rules>                     vvv Some example rules
+                                        <requireFileChecksum></requireFileChecksum>
+                                        <requireFilesDontExist></requireFilesDontExist>
+                                        <requireFilesExist></requireFilesExist>
+                                        <requireFilesSize></requireFilesSize>
+                                    </rules>
+                                </configuration>
+                            </execution -->
+                        </executions>
+                    </plugin>
+                    
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>license-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>gen-third-party-licenses</id>
+                                <goals>
+                                    <goal>add-third-party</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- All projects should show warnings (including deprecation) all the time. -->
+                    <!-- <CLASS> is internal proprietary API and may be removed in a future release -->
+                    <!-- https://stackoverflow.com/questions/13855700/suppress-javac-warning-is-internal-proprietary-api-and-may-be-removed-in-a-f -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <showWarnings>true</showWarnings>        <!-- Need to check on configurability of warnings -->
+                            <showDeprecation>true</showDeprecation>
+        
+                            <!-- <fork>true</fork>
+                            <compilerArgs>
+                                <arg>-Xmx512m</arg>    not sure if we will ever need to fork and/or explicitly set max memory
+                                <arg>-XDignore.symbol.file</arg>  We used this with Ant at one time, might need again
+                            </compilerArgs> -->
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>com.github.spotbugs</groupId>             <!-- https://spotbugs.readthedocs.io/en/stable/bugDescriptions.html -->
+                        <artifactId>spotbugs-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>verify-spotbugs</id>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                                <phase>verify</phase>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <failOnError>false</failOnError>        <!-- Currently just in understand/investigate/highlight mode - don't want to fail the build -->
+                            <!-- effort>min|less|default|more|max</effort -->
+                        </configuration>
+                    </plugin>
+        
+                    <plugin>
+                        <groupId>org.owasp</groupId>
+                        <artifactId>dependency-check-maven</artifactId>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                                <phase>verify</phase>    <!-- default phase -->
+                                <configuration>
+        
+                                    <!-- So the <systemPath> deps and other errors don't fail build -->
+                                    <!-- Currently just in understand/investigate/highlight mode - don't want to fail the build -->
+                                    <failOnError>false</failOnError>
+        
+                                    <!-- To suppress an error about not having a path to the .NET runtime to check .NET assemblies -->
+                                    <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+        
+                                    <!-- This configuration element was supposed to fix the issue discussed at
+                                           https://github.com/jeremylong/DependencyCheck/issues/2209
+                                         However, it did not work for me, and removing
+                                           ~/.m2/repository/org/owasp/dependency-check-data/4.0/jsrepository.json
+                                         was my only option. Some day in the future we can test this flag again.
+                                         Alternatively we can add the deletion of the above file to the clean goal.
+                                     -->
+                                    <retireJsForceUpdate>true</retireJsForceUpdate>
+        
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>test-jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+        
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                    <goal>test-jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- 'mvn install -DcreateChecksum=true' did not seem to work but this plug-in seems good -->
+                    <!-- Right now this plug-in just results in the MD5s of the JARs being written
+                         to the target directory.  No plug-in currently copies/places the MD5 files
+                         into the local repository.  I think this is because Maven's opinion is that
+                         they aren't needed for the local repository, but rather only if you were to
+                         deploy to a more public place, where others might want to use them to verify
+                         the checksum.  Thus checksum creation functionality was moved from the install
+                         plug-in to the deploy plug-in (presumably, but did not confirm).
+                         
+                         This is discussed some here:
+                         https://maven.apache.org/plugins/maven-install-plugin/
+                         https://issues.apache.org/jira/browse/MINSTALL-143
+                    -->
+                    <plugin>
+                        <groupId>net.nicoulaj.maven.plugins</groupId>
+                        <artifactId>checksum-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>avondale-md5</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>artifacts</goal>
+                                </goals>
+                                <configuration>
+                                    <algorithms>
+                                      <algorithm>MD5</algorithm>
+                                    </algorithms>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+        
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>versions-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>display-dependency-updates</id>
+                                <goals>
+                                    <goal>display-dependency-updates</goal>
+                                </goals>
+                                <phase>verify</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+        
+                    <!-- Also for the purpose of standardizing the reporting for all
+                         projects we are going to have a couple of the most useful
+                         dependency plug-in goals executed during the 'verify' phase,
+                         which executes right before the 'install' phase.  We can
+                         remove this one day when we have better confidence in our
+                         Maven build system and dependency management processes. -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>show-classpath</id>
+                                <goals>
+                                    <goal>build-classpath</goal>
+                                </goals>
+                                <phase>generate-sources</phase>
+                            </execution>
+                            <execution>
+                                <id>default-cli</id>      <!-- This is for independent, standalone, "tool" usage -->
+                                <goals>                   <!-- :analyze causes test-compile phase to be executed -->
+                                    <goal>analyze</goal>  <!-- For some reason :tree also picking up -->
+                                </goals>                  <!-- the configuration below when this is -->
+                                <configuration>           <!-- supposed to only be for :analyze. -->
+                                    <verbose>true</verbose>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>verify-dependency-tree</id>
+                                <goals>
+                                    <goal>tree</goal>
+                                </goals>
+                                <phase>verify</phase>
+                            </execution>
+                            <execution>
+                                <id>verify-dependency-analyze</id>
+                                <goals>
+                                    <goal>analyze-only</goal>
+                                </goals>
+                                <phase>verify</phase>
+                                <configuration>
+                                    <verbose>true</verbose>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                </plugins>
+            </build>
+
+            <!-- Reporting plug-ins for all projects.  It might seem a little overkill
+                 to include these on all projects, but there's very little harm besides
+                 longer site build times.  By activating these plug-ins here we standard-
+                 ize the reports for all Java projects and ensure visibility of key
+                 code base metrics. -->
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-report-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>jdepend-maven-plugin</artifactId>
+                    </plugin>
+        
+                    <!-- This is so the reports generated by the following goals are
+                         performed automatically during generation:
+                           - versions:dependency-updates-report
+                           - versions:plugin-updates-report
+                           - versions:property-updates-report -->
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>versions-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.owasp</groupId>
+                        <artifactId>dependency-check-maven</artifactId>
+        
+                        <!-- This config has to be in both <build> and <reporting> -->
+                        <!-- https://maven.apache.org/guides/mini/guide-configuring-plugins.html -->
+                        <configuration>
+        
+                            <!-- So the <systemPath> deps and other errors don't fail build -->
+                            <!-- Currently just in understand/investigate/highlight mode - don't want to fail the build -->
+                            <failOnError>false</failOnError>
+        
+                            <!-- To suppress an error about not having a path to the .NET runtime to check .NET assemblies -->
+                            <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.github.spotbugs</groupId>               <!-- https://spotbugs.readthedocs.io/en/stable/bugDescriptions.html -->
+                        <artifactId>spotbugs-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>license-maven-plugin</artifactId>
+                        <reportSets>
+                            <reportSet>
+                                <reports>
+                                    <report>third-party-report</report>  <!-- This is bare minimum for all normal projects -->
+                                    
+                                    <!-- Multi-module POMs that don't have their modules also listed
+                                         as dependencies will need to override this plug-in behavior
+                                         in their POM and use this report (goal) instead. -->
+                                    <!-- report>aggregate-third-party-report</report -->
+                                </reports>
+                            </reportSet>
+                        </reportSets>
+                    </plugin>
+                </plugins>
+            </reporting>
+            
+        </profile>
+    </profiles>
+
+</project>

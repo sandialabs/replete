@@ -1,0 +1,104 @@
+Expand Selection To Enclosing Element Alt+Shift+Up/Down 
+   (Or Ctrl+Shift+Up/Down)
+Replace with local history can work on a per-method basis.
+Replace with local history on a class can restore deleted methods.
+Ctrl+Space works in new dialog box!
+Ctrl/Apple held when click on a run config from the Run/Debug menus
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "LibInfo [mydog=" + mydog + ", xxxx=" + xxxx + ", y=" + y + "]";
+    }
+
+    public LibInfo() {
+        super();
+    }
+
+    public LibInfo(boolean mydog, String xxxx, int y) {
+        super();
+        this.mydog = mydog;
+        this.xxxx = xxxx;
+        this.y = y;
+    }
+
+    private boolean mydog;
+    private String xxxx;
+    private int y;
+    
+    public void setMydog(boolean mydog) {
+        this.mydog = mydog;
+    }
+    
+    public String getXxxx() {
+        return xxxx;
+    }
+
+    public boolean isMydog() {
+        return mydog;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (mydog ? 1231 : 1237);
+        result = prime * result + ((xxxx == null) ? 0 : xxxx.hashCode());
+        result = prime * result + y;
+        return result;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj)
+            return true;
+        if(obj == null)
+            return false;
+        if(getClass() != obj.getClass())
+            return false;
+        LibInfo other = (LibInfo) obj;
+        if(mydog != other.mydog)
+            return false;
+        if(xxxx == null) {
+            if(other.xxxx != null)
+                return false;
+        } else if(!xxxx.equals(other.xxxx))
+            return false;
+        if(y != other.y)
+            return false;
+        return true;
+    }
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    
+    public void something(Object o) {
+    if(o instanceof Exception) {
+        ((Exception) o).printStackTrace();
+    }
+    
+    System.currentTimeMillis()
+    
+    Surrout With:
+    
+            try {
+            double angle = 12.32;
+            double cos = Math.cos(angle);
+            System.out.println("asdfs");
+        } catch(WHAT e) {
+        }
+    

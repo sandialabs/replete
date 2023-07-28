@@ -1,0 +1,186 @@
+<replete.xstream.SerializationResult>
+  <metadata>
+    <appName>&lt;unknown&gt;</appName>
+    <serializationDate>2017-09-05 01:28:37 AM</serializationDate>
+    <user>dtrumbo</user>
+    <serializationLib>XStream</serializationLib>
+    <serializationLibVersion>xstream-1.4.3/xpp3_min-1.1.4c</serializationLibVersion>
+    <targetObjectClass>replete.ui.help.model.HelpAlbum</targetObjectClass>
+  </metadata>
+  <targetObject class="replete.ui.help.model.HelpAlbum">
+    <id>test</id>
+    <pageRoots>
+      <replete.ui.help.model.HelpPage>
+        <album reference="../../.."/>
+        <name>1111111111</name>
+        <content>
+          <htmlContent></htmlContent>
+        </content>
+        <children>
+          <replete.ui.help.model.HelpPage>
+            <album reference="../../../../.."/>
+            <parent reference="../../.."/>
+            <name>New Section</name>
+            <content>
+              <htmlContent></htmlContent>
+            </content>
+            <children/>
+          </replete.ui.help.model.HelpPage>
+          <replete.ui.help.model.HelpPage>
+            <album reference="../../../../.."/>
+            <parent reference="../../.."/>
+            <name>aaaaaaaaaa</name>
+            <content>
+              <htmlContent>alsadf lkjsdf lsdkfjf lkjdsf f</htmlContent>
+            </content>
+            <children>
+              <replete.ui.help.model.HelpPage>
+                <album reference="../../../../../../.."/>
+                <parent reference="../../.."/>
+                <name>aaaaaaaaa</name>
+                <content>
+                  <htmlContent></htmlContent>
+                </content>
+                <children/>
+              </replete.ui.help.model.HelpPage>
+            </children>
+          </replete.ui.help.model.HelpPage>
+        </children>
+      </replete.ui.help.model.HelpPage>
+      <replete.ui.help.model.HelpPage>
+        <album reference="../../.."/>
+        <name>4444444</name>
+        <content>
+          <htmlContent></htmlContent>
+        </content>
+        <children/>
+      </replete.ui.help.model.HelpPage>
+      <replete.ui.help.model.HelpPage>
+        <album reference="../../.."/>
+        <name>New Section</name>
+        <content>
+          <htmlContent></htmlContent>
+        </content>
+        <children>
+          <replete.ui.help.model.HelpPage>
+            <album reference="../../../../.."/>
+            <parent reference="../../.."/>
+            <name>New Section</name>
+            <content>
+              <htmlContent>asdfasfasdfsdfa</htmlContent>
+            </content>
+            <children/>
+          </replete.ui.help.model.HelpPage>
+        </children>
+      </replete.ui.help.model.HelpPage>
+      <replete.ui.help.model.HelpPage>
+        <album reference="../../.."/>
+        <name>saff</name>
+        <content>
+          <htmlContent></htmlContent>
+        </content>
+        <children/>
+      </replete.ui.help.model.HelpPage>
+      <replete.ui.help.model.HelpPage>
+        <album reference="../../.."/>
+        <name>lkjlkj CHANGED</name>
+        <content>
+          <htmlPath>mypage.html</htmlPath>
+        </content>
+        <children/>
+      </replete.ui.help.model.HelpPage>
+      <replete.ui.help.model.HelpPage>
+        <album reference="../../.."/>
+        <name>sadfd</name>
+        <content>
+          <htmlPath>test.html</htmlPath>
+        </content>
+        <children/>
+      </replete.ui.help.model.HelpPage>
+      <replete.ui.help.model.HelpPage>
+        <album reference="../../.."/>
+        <name>New Section</name>
+        <content>
+          <htmlContent>aaaa</htmlContent>
+        </content>
+        <children/>
+      </replete.ui.help.model.HelpPage>
+    </pageRoots>
+    <terms>
+      <replete.ui.help.model.HelpTerm>
+        <name>collar</name>
+      </replete.ui.help.model.HelpTerm>
+      <replete.ui.help.model.HelpTerm>
+        <name>leash</name>
+      </replete.ui.help.model.HelpTerm>
+      <replete.ui.help.model.HelpTerm>
+        <name>house</name>
+      </replete.ui.help.model.HelpTerm>
+      <replete.ui.help.model.HelpTerm>
+        <name>flea</name>
+      </replete.ui.help.model.HelpTerm>
+      <replete.ui.help.model.HelpTerm>
+        <name>fur</name>
+      </replete.ui.help.model.HelpTerm>
+    </terms>
+    <termLinks>
+      <replete.ui.help.model.HelpTermLink>
+        <term reference="../../../terms/replete.ui.help.model.HelpTerm"/>
+        <context>putting one on a dog</context>
+        <page>
+          <album reference="../../../.."/>
+          <parent>
+            <album reference="../../../../.."/>
+            <name>Animalsoo</name>
+            <content>
+              <htmlContent></htmlContent>
+            </content>
+            <children/>
+          </parent>
+          <name>Dogs</name>
+          <content>
+            <htmlContent>&lt;h1&gt;&lt;font color=&apos;blue&apos;&gt;Dogs are&lt;/font&gt; of the &lt;u&gt;family&lt;/u&gt; Caninis&lt;/h1&gt;</htmlContent>
+          </content>
+          <children/>
+        </page>
+      </replete.ui.help.model.HelpTermLink>
+      <replete.ui.help.model.HelpTermLink>
+        <term reference="../../../terms/replete.ui.help.model.HelpTerm"/>
+        <context>choosing the right color</context>
+        <page reference="../../replete.ui.help.model.HelpTermLink/page"/>
+      </replete.ui.help.model.HelpTermLink>
+      <replete.ui.help.model.HelpTermLink>
+        <term reference="../../../terms/replete.ui.help.model.HelpTerm"/>
+        <context>choosing the right size</context>
+        <page reference="../../replete.ui.help.model.HelpTermLink/page"/>
+      </replete.ui.help.model.HelpTermLink>
+      <replete.ui.help.model.HelpTermLink>
+        <term reference="../../../terms/replete.ui.help.model.HelpTerm[2]"/>
+        <context>putting one on a dog</context>
+        <page reference="../../replete.ui.help.model.HelpTermLink/page"/>
+      </replete.ui.help.model.HelpTermLink>
+      <replete.ui.help.model.HelpTermLink>
+        <term reference="../../../terms/replete.ui.help.model.HelpTerm[2]"/>
+        <context>choosing the right color</context>
+        <page reference="../../replete.ui.help.model.HelpTermLink/page"/>
+      </replete.ui.help.model.HelpTermLink>
+      <replete.ui.help.model.HelpTermLink>
+        <term reference="../../../terms/replete.ui.help.model.HelpTerm[3]"/>
+        <page reference="../../replete.ui.help.model.HelpTermLink/page"/>
+      </replete.ui.help.model.HelpTermLink>
+      <replete.ui.help.model.HelpTermLink>
+        <term reference="../../../terms/replete.ui.help.model.HelpTerm[4]"/>
+        <page reference="../../replete.ui.help.model.HelpTermLink/page"/>
+      </replete.ui.help.model.HelpTermLink>
+      <replete.ui.help.model.HelpTermLink>
+        <term reference="../../../terms/replete.ui.help.model.HelpTerm[4]"/>
+        <context>removing them from fur</context>
+        <page reference="../../replete.ui.help.model.HelpTermLink/page"/>
+      </replete.ui.help.model.HelpTermLink>
+      <replete.ui.help.model.HelpTermLink>
+        <term reference="../../../terms/replete.ui.help.model.HelpTerm[5]"/>
+        <page reference="../../replete.ui.help.model.HelpTermLink/page/parent"/>
+      </replete.ui.help.model.HelpTermLink>
+    </termLinks>
+  </targetObject>
+</replete.xstream.SerializationResult>
